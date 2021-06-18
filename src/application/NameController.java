@@ -36,5 +36,7 @@ public class NameController extends MenuController {
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
+
+		gameController.init(root);
 	}
 }
