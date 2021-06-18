@@ -47,7 +47,6 @@ public class GameController implements EventHandler<KeyEvent> {
 	public void handle(KeyEvent e) {
 		  KeyCode code = e.getCode();
 		if(code == KeyCode.RIGHT) {
-			System.out.println("RIGHT"); //Debug Printout
 			Pacman.move(0);	
 		} else if (code == KeyCode.DOWN) {
 			Pacman.move(1);	

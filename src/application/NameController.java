@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -33,6 +34,11 @@ public class NameController extends MenuController {
 		
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		
+		scene.setOnKeyPressed(gameController);
+		
+		
+		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();

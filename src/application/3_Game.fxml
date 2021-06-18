@@ -61,7 +61,7 @@
       </HBox>
    </top>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: Black;" BorderPane.alignment="CENTER">
+      <Pane fx:id="gamePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: Black;" BorderPane.alignment="CENTER">
          <children>
             <Arc fx:id="pacMan" fill="#f6ff1f" layoutX="287.0" layoutY="133.0" length="270.0" radiusX="10.0" radiusY="10.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
             <Line endX="-100.0" endY="148.0" layoutX="163.0" layoutY="53.0" startX="-100.0" stroke="#2900ff" strokeWidth="2.0" />
