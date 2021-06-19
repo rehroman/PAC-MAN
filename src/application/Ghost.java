@@ -1,22 +1,11 @@
 package application;
 
-
-
-public class Pacman {
-	int[] pacmanLocation = new int[2];
+public class Ghost {
+	int[] ghostLocation = new int[2];
 	
-
-	
-	public void initMap(int map) {
-		pacmanLocation[0] = 287 ;
-		pacmanLocation[1] = 133 ;
-		if(map == 0) {
-			//draw map 1
-		}
-	}
 	
 	public int[] move(int direction) {
-		int[] possibleLocation = pacmanLocation;
+		int[] possibleLocation = ghostLocation;
 		
 		//right
 		if(direction == 0) {		
@@ -35,8 +24,9 @@ public class Pacman {
 			possibleLocation[1] -= 1;
 		}
 		
-		//TODO check for walls before set pacmanLocation	
-		return pacmanLocation = possibleLocation;
+		//TODO check for walls before set ghostLocation	
+		return ghostLocation = possibleLocation;
 		
 	}
+
 }

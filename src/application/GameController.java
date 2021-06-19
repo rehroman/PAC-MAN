@@ -26,7 +26,6 @@ public class GameController implements EventHandler<KeyEvent> {
 	public void init(Parent root) {
 		Pacman = new Pacman();
 		Pacman.initMap(0);
-		root.setFocusTraversable(true);
 		root.requestFocus();
 	}
 	
