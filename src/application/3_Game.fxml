@@ -7,11 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
+<BorderPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
          <children>
@@ -59,10 +57,4 @@
          </children>
       </HBox>
    </top>
-   <center>
-      <Pane fx:id="gamePane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: Black;" BorderPane.alignment="CENTER">
-         <children>
-            <Arc fx:id="pacMan" fill="#f6ff1f" layoutX="287.0" layoutY="133.0" length="270.0" radiusX="10.0" radiusY="10.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-         </children></Pane>
-   </center>
 </BorderPane>
