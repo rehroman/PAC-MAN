@@ -23,10 +23,10 @@ public class GameController implements EventHandler<KeyEvent> {
 	private Image pacMan_Right;
 	private Image ghost1;
 	
-	private Pacman Pacman;
+	private GameModel Pacman;
 
 	public void init(Parent root) {
-		Pacman = new Pacman();
+		Pacman = new GameModel();
 		Pacman.start();
 		root.requestFocus();
 		
@@ -39,7 +39,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		ImageView imageView2 = new ImageView(ghost1);
 		
 		pane.add(imageView, 1, 0);
-		pane.add(imageView2, 0, 0);
+		pane.add(imageView2, 2, 0);
 
 		
 		pane.setGridLinesVisible(true); //TODO remove later
@@ -71,7 +71,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		} else if (code == KeyCode.UP) {
 			Pacman.pacmanMove(3);	
 		}
-		//pacMan.setLayoutX(Pacman.pacmanLocation[0]); TODO Korrigieren im Grid
+		//pacMan.setLayoutX(Pacman.pacmanLocation[0]);
 		//pacMan.setLayoutY(Pacman.pacmanLocation[1]);
 	}
 	
