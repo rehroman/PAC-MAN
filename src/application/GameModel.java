@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Pacman {
+public class GameModel {
 	int[] pacmanLocation = new int[2];
 	int rowNumber;
 	int columnNumber;
 	int[] positionState = new int[2];
 	
-	public Pacman() {
+	public GameModel() {
 		this.start();
 	}
 	
