@@ -23,14 +23,13 @@ public class GameController implements EventHandler<KeyEvent> {
 	private Image pacMan_Right;
 	private Image ghost1;
 	
-	private GameModel Pacman;
+	private GameModel GameModel;
 
 	public void init(Parent root) {
-		Pacman = new GameModel();
-		Pacman.start();
+		GameModel = new GameModel();
 		root.requestFocus();
 		
-		//Init the Grid
+		//Initialize the Grid
 		
 		this.pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
 		this.ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
@@ -63,13 +62,13 @@ public class GameController implements EventHandler<KeyEvent> {
 	public void handle(KeyEvent e) {
 		  KeyCode code = e.getCode();
 		if(code == KeyCode.RIGHT) {
-			Pacman.pacmanMove(0);	
+			GameModel.pacmanMove(0);	
 		} else if (code == KeyCode.DOWN) {
-			Pacman.pacmanMove(1);	
+			GameModel.pacmanMove(1);	
 		} else if (code == KeyCode.LEFT) {
-			Pacman.pacmanMove(2);	
+			GameModel.pacmanMove(2);	
 		} else if (code == KeyCode.UP) {
-			Pacman.pacmanMove(3);	
+			GameModel.pacmanMove(3);	
 		}
 		//pacMan.setLayoutX(Pacman.pacmanLocation[0]);
 		//pacMan.setLayoutY(Pacman.pacmanLocation[1]);
