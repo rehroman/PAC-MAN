@@ -45,4 +45,10 @@ public class NameController extends MenuController {
 
 		gameController.init(root);
 	}
+
+	public void switchToMenu (ActionEvent e) throws IOException {
+		/*TODO: Inhalt*/
+	}
+
+
 }
