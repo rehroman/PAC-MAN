@@ -30,9 +30,7 @@ public class GameModel {
 		gameOver = false;
 		this.initMap("src/application/Map1.txt"); 
 	}
-	
-	
-	
+
 	/* 
 	 * positionState Key:
 	 * 0 means EMPTY
