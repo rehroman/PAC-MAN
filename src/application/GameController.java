@@ -30,19 +30,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		root.requestFocus();
 		
 		//Initialize the Grid
-
-
-
-		
-		this.pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
-		this.ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
-		GridPane pane = new GridPane();
-		ImageView imageView = new ImageView(pacMan_Right);
-		ImageView imageView2 = new ImageView(ghost1);
-		
-		pane.add(imageView, 1, 0);
-		pane.add(imageView2, 2, 0);
-
+		GridPane pane = GameModel.createGameWorld(1); //
 		
 		pane.setGridLinesVisible(true); //TODO remove later
 		gamePane.setCenter(pane);
@@ -60,51 +48,6 @@ public class GameController implements EventHandler<KeyEvent> {
 		System.exit(0); //TODO something else?
 	}
 
-	/*==================GAMEWORLD==========================*/
-
-	// GameWorld int [row][column]
-	String [][] gameWorld1 = {
-			{"WALL",2,2,2},
-			{2,1,1,2},
-			{2,2,2,2}
-	};
-
-	public void createGameWorld(int[][] world) {
-		/*TODO: loop to go through two dimensional array and place elements in grid*/
-
-	};
-
-	public ImageView createGameElement(int gameElement){
-		/*
-		 * positionState Key:
-		 * 0 means EMPTY
-		 * 1 means CHERRY
-		 * 2 means BORDER (solid-blue.png)
-		 * 3 means PACMAN
-		 * 4,5,6 means GHOSTS
-		 * 7 means DOT
-		 */
-		let elementToCreate;
-
-		switch(gameElement) {
-			case 0:
-				// code block
-				break;
-			case 1:
-				this.pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
-				let aha = new ImageView(pacMan_Right);
-				elementToCreate = aha;
-				break;
-			case 2:
-				this.ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
-				return new ImageView(ghost1);
-				break;
-			default:
-				// code block
-		}
-	}
-
-        
 
 @Override
 	public void handle(KeyEvent e) {

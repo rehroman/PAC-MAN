@@ -4,7 +4,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javafx.geometry.HPos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+
 import javafx.geometry.Point2D;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
 
 public class GameModel {
 	Boolean gameOver;
@@ -28,7 +37,7 @@ public class GameModel {
 		points = 0;
 		lives = 3;
 		gameOver = false;
-		this.initMap("src/application/Map1.txt"); 
+		this.initMap("src/application/Map1.txt");
 	}
 
 	/* 
@@ -42,33 +51,18 @@ public class GameModel {
 	 */
 	
 	public void initMap(String map) {
-		columnNumber = 8;
-		rowNumber = 3;
+		/*columnNumber = 8;
+		rowNumber = 3;*/
 		
-		positionState = new String[columnNumber][rowNumber];
-		
-//		TODO Map import:
-//		 File file = new File(map);
-//		 Scanner sc = null;
-//		 try {
-//			sc = new Scanner(file);
-//			
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		 while(sc.hasNext()) {     //TODO 
-//		 System.out.println(sc.next()); //DEBUG
-//		 }
-//		 
+		positionState = gameWorld1;
+
 		 //set initial Start Locations of Ghosts and Pacman according to MAP
 		 startPacmanLocation = new Point2D(3,1);
 		 currentPacmanLocation = startPacmanLocation;
 		 currentGhost1Location = new Point2D(2,1);
 		 
 		 //set the States of of the fields in the grid
-		 positionState[0][2]= "BORDER";
+		 /*positionState[0][2]= "BORDER";
 		 positionState[1][2]= "BORDER";
 		 positionState[2][2]= "BORDER";
 		 positionState[3][2]= "BORDER";
@@ -93,7 +87,106 @@ public class GameModel {
 		 positionState[4][0]= "BORDER";
 		 positionState[5][0]= "BORDER";
 		 positionState[6][0]= "BORDER";
-		 positionState[7][0]= "BORDER";
+		 positionState[7][0]= "BORDER";*/
+	}
+
+	/*==================GAMEWORLD==========================*/
+
+	// GameWorld int [row][column]
+	String [][] gameWorld1 = {
+			{"PACMAN", "PACMAN", "PACMAN", "PACMAN"}, // [0] --> row; single elements of this row [0][1], [0][2] ...
+			{"PACMAN","GHOST", "GHOST", "PACMAN"}, // [1]
+			{"PACMAN", "PACMAN", "PACMAN", "PACMAN"} // [2]
+	};
+
+	public GridPane createGameWorld(int selectedLevel) {
+
+		String [][] world = null;
+		GridPane grid = new GridPane();
+
+		/*needed to calculate the width and height of each cell (in %)*/
+		rowNumber = 0;
+		columnNumber = 0;
+
+		/*set different levels*/
+		switch(selectedLevel) {
+			case 1:
+				world = new String[][]{{"PACMAN", "PACMAN", "PACMAN", "PACMAN"},
+						{"PACMAN", "GHOST", "GHOST", "PACMAN"},
+						{"PACMAN", "PACMAN", "PACMAN", "PACMAN"},
+				};
+				break;
+			case 2:
+				world = new String[][]{{"GHOST", "GHOST", "GHOST", "GHOST"},
+						{"GHOST", "PACMAN", "PACMAN", "GHOST"},
+						{"GHOST", "GHOST", "GHOST", "GHOST"},
+				};
+				break;
+		}
+
+		/* set elements of world on GridPane
+			1) first loops over the row of the selected world
+		   	2) then for each element in that row the element is created and added to GridPane */
+		for (rowNumber = 0; rowNumber < world.length; rowNumber++) { // 1)
+			System.out.println(world[rowNumber]);
+			for (columnNumber = 0; columnNumber < world[rowNumber].length; columnNumber++) { // 2)
+				System.out.println(world[rowNumber][columnNumber]);
+				ImageView element = this.createGameElement(world[rowNumber][columnNumber]);
+				grid.add(element, columnNumber, rowNumber);
+			}
+		}
+		this.setRowAndColumnHeight(rowNumber, columnNumber, grid);
+
+		return grid;
+	};
+
+	public ImageView createGameElement(String gameElement){
+		ImageView element = null;
+		 switch(gameElement) {
+			case "EMPTY":
+				// code block
+				break;
+			case "PACMAN":
+				Image pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
+				ImageView imageViewPacMan = new ImageView(pacMan_Right);
+				element = imageViewPacMan;
+				break;
+			case "GHOST":
+				Image ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
+				ImageView imageViewGhost = new ImageView(ghost1);
+				element = imageViewGhost;
+				break;
+			case "CHERRY":
+				break;
+			default:
+				// code block
+		}
+		return element;
+	}
+
+	private void setRowAndColumnHeight(int rowNumber, int columnNumber, GridPane grid){
+		/*calculates the percentage (width & height) that each cell should occupy*/
+
+		/*set COLUMN WIDTH of each column*/
+		ColumnConstraints column1 = new ColumnConstraints();
+		column1.setPercentWidth(100d / columnNumber);
+		double width = (100/columnNumber);
+
+		/*apply it for every column*/
+		for (int i = 0; i < columnNumber; i++) {
+			grid.getColumnConstraints().add(column1);
+		}
+
+		/*set ROW HEIGHT of each row*/
+		RowConstraints rc = new RowConstraints();
+		rc.setPercentHeight(100d / rowNumber);
+		double height = (100/rowNumber);
+
+		/*apply it for every row*/
+		for (int i = 0; i < rowNumber; i++) {
+			grid.getRowConstraints().add(rc);
+		}
+
 	}
 	
 	public void pacmanMove(int direction) {
@@ -149,7 +242,6 @@ public class GameModel {
 			System.out.println("Points " + points);//DEBUG
 			System.out.println("Lives  " + lives);//DEBUG	
 	}
-
 
 	public Point2D movePoint(int direction, Point2D possibleLocation) {
 		
