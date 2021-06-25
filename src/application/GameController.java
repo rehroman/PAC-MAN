@@ -30,16 +30,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		root.requestFocus();
 		
 		//Initialize the Grid
-		
-		this.pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
-		this.ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
-		GridPane pane = new GridPane();
-		ImageView imageView = new ImageView(pacMan_Right);
-		ImageView imageView2 = new ImageView(ghost1);
-		
-		pane.add(imageView, 1, 0);
-		pane.add(imageView2, 2, 0);
-
+		GridPane pane = GameModel.createGameWorld(1); //
 		
 		pane.setGridLinesVisible(true); //TODO remove later
 		gamePane.setCenter(pane);
@@ -56,7 +47,7 @@ public class GameController implements EventHandler<KeyEvent> {
 	public void exitGame (ActionEvent e) {
 		System.exit(0); //TODO something else?
 	}
-        
+
 
 @Override
 	public void handle(KeyEvent e) {
