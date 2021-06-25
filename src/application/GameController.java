@@ -31,7 +31,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		
 		//Initialize the Grid
 		GridPane pane = GameModel.createGameWorld(1); //
-		
+
 		pane.setGridLinesVisible(true); //TODO remove later
 		gamePane.setCenter(pane);
 	}

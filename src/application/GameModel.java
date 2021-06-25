@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
 import javafx.geometry.Point2D;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 public class GameModel {
 	Boolean gameOver;
@@ -54,7 +54,7 @@ public class GameModel {
 		/*columnNumber = 8;
 		rowNumber = 3;*/
 		
-		positionState = gameWorld1;
+		positionState = world1;
 
 		 //set initial Start Locations of Ghosts and Pacman according to MAP
 		 startPacmanLocation = new Point2D(3,1);
@@ -89,15 +89,18 @@ public class GameModel {
 		 positionState[6][0]= "BORDER";
 		 positionState[7][0]= "BORDER";*/
 	}
+	 String[][] world1 = {
+		{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
+		{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"},
+		{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
+		{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
+		{"BORDER", "BORDER", "CHERRY", "BORDER", "BORDER", "BORDER", "BORDER"},
+		{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
+	};
 
 	/*==================GAMEWORLD==========================*/
 
 	// GameWorld int [row][column]
-	String [][] gameWorld1 = {
-			{"PACMAN", "PACMAN", "PACMAN", "PACMAN"}, // [0] --> row; single elements of this row [0][1], [0][2] ...
-			{"PACMAN","GHOST", "GHOST", "PACMAN"}, // [1]
-			{"PACMAN", "PACMAN", "PACMAN", "PACMAN"} // [2]
-	};
 
 	public GridPane createGameWorld(int selectedLevel) {
 
@@ -111,9 +114,13 @@ public class GameModel {
 		/*set different levels*/
 		switch(selectedLevel) {
 			case 1:
-				world = new String[][]{{"PACMAN", "PACMAN", "PACMAN", "PACMAN"},
-						{"PACMAN", "GHOST", "GHOST", "PACMAN"},
-						{"PACMAN", "PACMAN", "PACMAN", "PACMAN"},
+				world = new String[][]{
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
+						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"},
+						{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
+						{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
+						{"BORDER", "BORDER", "CHERRY", "BORDER", "BORDER", "BORDER", "BORDER"},
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
 				};
 				break;
 			case 2:
@@ -128,13 +135,24 @@ public class GameModel {
 			1) first loops over the row of the selected world
 		   	2) then for each element in that row the element is created and added to GridPane */
 		for (rowNumber = 0; rowNumber < world.length; rowNumber++) { // 1)
-			System.out.println(world[rowNumber]);
+			/*System.out.println(world[rowNumber]);*/
 			for (columnNumber = 0; columnNumber < world[rowNumber].length; columnNumber++) { // 2)
-				System.out.println(world[rowNumber][columnNumber]);
-				ImageView element = this.createGameElement(world[rowNumber][columnNumber]);
-				grid.add(element, columnNumber, rowNumber);
+				/*System.out.println(world[rowNumber][columnNumber]);*/
+				/*for images --> creates and adds image to grid*/
+				if (world[rowNumber][columnNumber].equals("BORDER") || world[rowNumber][columnNumber].equals("CHERRY") || world[rowNumber][columnNumber].equals("GHOST")){
+					ImageView element = this.createGameElement(world[rowNumber][columnNumber]);
+					grid.add(element, columnNumber, rowNumber);
+				}
+				/*for shape --> creates and adds shape to grid*/
+				if (world[rowNumber][columnNumber].equals("DOT")){
+					Shape element = this.createGameElementShapes(world[rowNumber][columnNumber]);
+					grid.add(element, columnNumber, rowNumber);
+				}
+
 			}
 		}
+
+		/* sets the width and height of single cells in % */
 		this.setRowAndColumnHeight(rowNumber, columnNumber, grid);
 
 		return grid;
@@ -149,26 +167,68 @@ public class GameModel {
 			case "PACMAN":
 				Image pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
 				ImageView imageViewPacMan = new ImageView(pacMan_Right);
+				imageViewPacMan.setFitHeight(30);
+				imageViewPacMan.setFitWidth(30);
 				element = imageViewPacMan;
 				break;
 			case "GHOST":
 				Image ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
 				ImageView imageViewGhost = new ImageView(ghost1);
+				imageViewGhost.setFitHeight(30);
+				imageViewGhost.setFitWidth(30);
 				element = imageViewGhost;
 				break;
 			case "CHERRY":
+				Image cherry = new Image(getClass().getResourceAsStream("/Icons/Cherry.png"));
+				ImageView imageCherry = new ImageView(cherry);
+				imageCherry.setFitHeight(30);
+				imageCherry.setFitWidth(30);
+				element = imageCherry;
 				break;
+			 case "BORDER":
+				 Image border = new Image(getClass().getResourceAsStream("/Icons/brick-wall.png"));
+				 ImageView imageBorder = new ImageView(border);
+				 /*TODO: soll Zelle komplett ausfüllen*/
+				 imageBorder.setFitHeight(30);
+				 imageBorder.setFitWidth(30);
+				 element = imageBorder;
+				 break;
 			default:
 				// code block
 		}
 		return element;
 	}
 
+	public Shape createGameElementShapes(String gameElement){
+		Circle circle = new Circle();
+		circle.setCenterX(100.0f);
+		circle.setCenterY(100.0f);
+		circle.setRadius(5.0f);
+		return circle;
+	}
+
+
+	/*TODO: wenn am Ende nicht benötigt, können calculateHeightOfSingleRow + calculateWidthOfSingleColumn gelöscht werden*/
+	private double calculateHeightOfSingleRow(int rowNumber){
+		double height = (100/rowNumber);
+		return height;
+	}
+	private double calculateWidthOfSingleColumn(int columnNumber){
+		double width = (100/columnNumber);
+		return width;
+	}
+
 	private void setRowAndColumnHeight(int rowNumber, int columnNumber, GridPane grid){
 		/*calculates the percentage (width & height) that each cell should occupy*/
 
 		/*set COLUMN WIDTH of each column*/
-		ColumnConstraints column1 = new ColumnConstraints();
+		ColumnConstraints column1 = new ColumnConstraints(Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE,
+				Priority.SOMETIMES,
+				HPos.CENTER,
+				true);
+
 		column1.setPercentWidth(100d / columnNumber);
 		double width = (100/columnNumber);
 
@@ -178,7 +238,12 @@ public class GameModel {
 		}
 
 		/*set ROW HEIGHT of each row*/
-		RowConstraints rc = new RowConstraints();
+		RowConstraints rc = new RowConstraints(Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE,
+				Region.USE_COMPUTED_SIZE,
+				Priority.SOMETIMES,
+				VPos.CENTER,
+				true);
 		rc.setPercentHeight(100d / rowNumber);
 		double height = (100/rowNumber);
 
