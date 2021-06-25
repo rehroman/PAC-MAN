@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 import javafx.geometry.Point2D;
@@ -10,6 +11,7 @@ public class GameModel {
 	Boolean gameOver;
 	Point2D startPacmanLocation;
 	Point2D currentPacmanLocation;
+	int currentpacmanDirection;
 	Point2D currentGhost1Location;
 	Point2D currentGhost2Location;
 	int columnNumber;
@@ -27,8 +29,10 @@ public class GameModel {
 	public void start() {
 		points = 0;
 		lives = 3;
+		currentpacmanDirection = 1;
 		gameOver = false;
-		this.initMap("src/application/Map1.txt"); 
+		moveGhosts();
+		this.initMap("src/application/Map1.txt");
 	}
 	
 	
@@ -98,10 +102,19 @@ public class GameModel {
 		 positionState[7][0]= "BORDER";
 	}
 	
+	//instantiate ghosts
+	public void moveGhosts (){
+			 new Ghost(this,1,currentGhost1Location);
+			 new Ghost(this,2,currentGhost2Location);
+	}
+	
+
+
 	public void pacmanMove(int direction) {
 		
 		//calculate new possible location
 		Point2D possiblePacmanLocation = movePoint(direction, currentPacmanLocation);
+		currentpacmanDirection = direction;
 		
 		System.out.println("Possible Pacman" + possiblePacmanLocation);//DEBUG
 		
@@ -136,7 +149,7 @@ public class GameModel {
 		} else if (positionState[possibleX][possibleY] == "GHOST3") {
 			currentPacmanLocation = startPacmanLocation;
 			lives -= 1;
-		} else { //DOT
+		} else { 											//DOT
 			points += 100;
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
@@ -145,6 +158,7 @@ public class GameModel {
 		
 		if (lives == 0) {
 			gameOver = true;
+			start();
 		}
 		
 			System.out.println("Current Pacman" + currentPacmanLocation);//DEBUG

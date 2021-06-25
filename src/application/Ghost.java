@@ -1,31 +1,32 @@
 package application;
 
-public class Ghost {
-	int[] ghostLocation = new int[2];
+import javafx.geometry.Point2D;
+
+public class Ghost extends Thread {
+	Point2D ghostLocation;
+	private GameModel gameModel;
+	private int ghostID;
 	
+	public Ghost(GameModel gameModel, int ghost, Point2D ghostLocation) {
+		this.ghostLocation = ghostLocation;
+		this.ghostID = ghostID;
+	}
 	
-	public int[] move(int direction) {
-		int[] possibleLocation = ghostLocation;
+	public Point2D getGhostLocation() {
+		return this.ghostLocation;
+	}
+	
+	public void run() {
+		while (gameModel.gameOver == false) {
+			System.out.println();
+			
+		}
+	}
+	public void move(int direction) {
 		
-		//right
-		if(direction == 0) {		
-			possibleLocation[0] += 1;
-		}
-		//down
-		else if(direction == 1) {		
-			possibleLocation[1] += 1;
-		}
-		//left 
-		else if(direction == 2) {		
-			possibleLocation[0] -= 1;
-		}
-		//up
-		else {		
-			possibleLocation[1] -= 1;
-		}
 		
 		//TODO check for walls before set ghostLocation	
-		return ghostLocation = possibleLocation;
+
 		
 	}
 
