@@ -42,6 +42,17 @@ public class MenuController {
 		stage.show();
 	}
 	
+	public void switchToMenu (ActionEvent e) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("1_Menu.fxml"));
+		root = loader.load();
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	
+}
+	
 	public void endGame (ActionEvent e) {
 		System.exit(0);
 	}
