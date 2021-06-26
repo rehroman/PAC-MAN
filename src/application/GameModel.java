@@ -13,7 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import static javafx.scene.paint.Color.BLACK;
 
 public class GameModel {
 	Boolean gameOver;
@@ -27,7 +30,13 @@ public class GameModel {
 	
 	int points;
 	int lives;
-	
+
+	/*loading images*/
+	Image pacMan_Right = new Image("/Icons/PacMan_Right.png");
+	Image ghost1 = new Image("/Icons/Ghost1.png");
+	Image cherry = new Image("/Icons/Cherry.png");
+	Image border = new Image("/Icons/brick-wall.png");
+
 	public GameModel() {
 		this.start();
 	}
@@ -37,7 +46,6 @@ public class GameModel {
 		points = 0;
 		lives = 3;
 		gameOver = false;
-		this.initMap("src/application/Map1.txt");
 	}
 
 	/* 
@@ -113,14 +121,25 @@ public class GameModel {
 
 		/*set different levels*/
 		switch(selectedLevel) {
+			/*always use a 15 x 15 world because of the size*/
 			case 1:
 				world = new String[][]{
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
-						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"},
-						{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
-						{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
-						{"BORDER", "BORDER", "CHERRY", "BORDER", "BORDER", "BORDER", "BORDER"},
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
+						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 1
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 2
+						{"BORDER", "CHERRY", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 3
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 4
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 5
+						{"BORDER", "DOT", "DOT", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 6
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 7
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 8
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 9
+						{"BORDER", "DOT", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 10
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 11
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 12
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 13
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
+						//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 			case 2:
@@ -135,12 +154,10 @@ public class GameModel {
 			1) first loops over the row of the selected world
 		   	2) then for each element in that row the element is created and added to GridPane */
 		for (rowNumber = 0; rowNumber < world.length; rowNumber++) { // 1)
-			/*System.out.println(world[rowNumber]);*/
 			for (columnNumber = 0; columnNumber < world[rowNumber].length; columnNumber++) { // 2)
-				/*System.out.println(world[rowNumber][columnNumber]);*/
 				/*for images --> creates and adds image to grid*/
 				if (world[rowNumber][columnNumber].equals("BORDER") || world[rowNumber][columnNumber].equals("CHERRY") || world[rowNumber][columnNumber].equals("GHOST")){
-					ImageView element = this.createGameElement(world[rowNumber][columnNumber]);
+					ImageView element = this.createGameElementImages(world[rowNumber][columnNumber]);
 					grid.add(element, columnNumber, rowNumber);
 				}
 				/*for shape --> creates and adds shape to grid*/
@@ -148,7 +165,6 @@ public class GameModel {
 					Shape element = this.createGameElementShapes(world[rowNumber][columnNumber]);
 					grid.add(element, columnNumber, rowNumber);
 				}
-
 			}
 		}
 
@@ -158,53 +174,63 @@ public class GameModel {
 		return grid;
 	};
 
-	public ImageView createGameElement(String gameElement){
+
+	public ImageView createGameElementImages(String gameElement){
 		ImageView element = null;
+
 		 switch(gameElement) {
-			case "EMPTY":
-				// code block
-				break;
 			case "PACMAN":
-				Image pacMan_Right = new Image(getClass().getResourceAsStream("/Icons/PacMan_Right.png"));
-				ImageView imageViewPacMan = new ImageView(pacMan_Right);
+				ImageView imageViewPacMan = new ImageView(this.pacMan_Right);
 				imageViewPacMan.setFitHeight(30);
 				imageViewPacMan.setFitWidth(30);
 				element = imageViewPacMan;
 				break;
 			case "GHOST":
-				Image ghost1 = new Image(getClass().getResourceAsStream("/Icons/Ghost1.png"));
-				ImageView imageViewGhost = new ImageView(ghost1);
+				ImageView imageViewGhost = new ImageView(this.ghost1);
 				imageViewGhost.setFitHeight(30);
 				imageViewGhost.setFitWidth(30);
 				element = imageViewGhost;
 				break;
 			case "CHERRY":
-				Image cherry = new Image(getClass().getResourceAsStream("/Icons/Cherry.png"));
-				ImageView imageCherry = new ImageView(cherry);
-				imageCherry.setFitHeight(30);
-				imageCherry.setFitWidth(30);
+				ImageView imageCherry = new ImageView(this.cherry);
+				imageCherry.setFitHeight(20);
+				imageCherry.setFitWidth(20);
 				element = imageCherry;
 				break;
 			 case "BORDER":
-				 Image border = new Image(getClass().getResourceAsStream("/Icons/brick-wall.png"));
-				 ImageView imageBorder = new ImageView(border);
-				 /*TODO: soll Zelle komplett ausfüllen*/
-				 imageBorder.setFitHeight(30);
-				 imageBorder.setFitWidth(30);
+				 ImageView imageBorder = new ImageView(this.border);
+				 imageBorder.setFitHeight(35);
+				 imageBorder.setFitWidth(40);
 				 element = imageBorder;
 				 break;
-			default:
-				// code block
 		}
 		return element;
 	}
 
 	public Shape createGameElementShapes(String gameElement){
-		Circle circle = new Circle();
-		circle.setCenterX(100.0f);
-		circle.setCenterY(100.0f);
-		circle.setRadius(5.0f);
-		return circle;
+		Shape element = null;
+
+		switch(gameElement) {
+			case "EMPTY":
+				// code block
+				break;
+			case "DOT":
+				Circle circle = new Circle();
+				circle.setCenterX(100.0f);
+				circle.setCenterY(100.0f);
+				circle.setRadius(3.0f);
+				element = circle;
+				break;
+			/*case "BORDER":
+				Rectangle r = new Rectangle();
+				r.setX(50);
+				r.setY(50);
+				r.setWidth(40);
+				r.setHeight(40);
+				element = r;
+				break;*/
+		}
+		return element;
 	}
 
 
@@ -251,7 +277,6 @@ public class GameModel {
 		for (int i = 0; i < rowNumber; i++) {
 			grid.getRowConstraints().add(rc);
 		}
-
 	}
 	
 	public void pacmanMove(int direction) {

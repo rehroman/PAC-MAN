@@ -17,6 +17,7 @@ public class GameController implements EventHandler<KeyEvent> {
 	@FXML BorderPane gamePane;
 	@FXML Label nameLabel;
 	@FXML Label pointsLabel;
+
 	int rowNumber;
 	int columnNumber;
 
@@ -32,7 +33,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		//Initialize the Grid
 		GridPane pane = GameModel.createGameWorld(1); //
 
-		pane.setGridLinesVisible(true); //TODO remove later
+		/*pane.setGridLinesVisible(true);*/ //TODO remove later
 		gamePane.setCenter(pane);
 	}
 	
