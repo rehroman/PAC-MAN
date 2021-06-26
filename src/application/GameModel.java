@@ -2,7 +2,6 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.Scanner;
 
 import javafx.geometry.HPos;
@@ -23,6 +22,7 @@ public class GameModel {
 	int currentpacmanDirection;
 	Point2D currentGhost1Location;
 	Point2D currentGhost2Location;
+	Point2D currentGhost3Location;
 	int columnNumber;
 	int rowNumber;
 	String[][] positionState;
@@ -32,6 +32,7 @@ public class GameModel {
 	
 	public GameModel() {
 		this.start();
+		moveGhosts();
 	}
 	
 
@@ -40,8 +41,13 @@ public class GameModel {
 		lives = 3;
 		currentpacmanDirection = 1;
 		gameOver = false;
-		moveGhosts();
-		this.initMap("src/application/Map1.txt");
+		 //TODO set initial Start Locations of Ghosts and Pacman according to MAP
+		 startPacmanLocation = new Point2D(3,1);
+		 currentPacmanLocation = startPacmanLocation;
+		 currentGhost1Location = new Point2D(1,1);
+		 currentGhost2Location = new Point2D(4,1);
+		this.initMap("src/application/Map1.txt"); // old can be removed
+		
 	}
 
 	/* 
@@ -60,10 +66,7 @@ public class GameModel {
 		
 		positionState = gameWorld1;
 
-		 //set initial Start Locations of Ghosts and Pacman according to MAP
-		 startPacmanLocation = new Point2D(3,1);
-		 currentPacmanLocation = startPacmanLocation;
-		 currentGhost1Location = new Point2D(2,1);
+
 		 
 		 //set the States of of the fields in the grid
 		 /*positionState[0][2]= "BORDER";
@@ -195,8 +198,9 @@ public class GameModel {
 	
 	//instantiate ghosts
 	public void moveGhosts (){
-			 new Ghost(this,1,currentGhost1Location);
-			 new Ghost(this,2,currentGhost2Location);
+			 new Ghost(this,0,currentGhost1Location);
+			 new Ghost(this,1,currentGhost2Location);
+	 
 	}
 	
 
@@ -229,30 +233,14 @@ public class GameModel {
 			
 		} else if (positionState[possibleX][possibleY] == "BORDER") {
 			
-		} else if (positionState[possibleX][possibleY] == "GHOST1") {
-			currentPacmanLocation = startPacmanLocation;
-			lives -= 1;
-			
-		} else if (positionState[possibleX][possibleY] == "GHOST2") {
-			currentPacmanLocation = startPacmanLocation;
-			lives -= 1;
-			
-		} else if (positionState[possibleX][possibleY] == "GHOST3") {
-			currentPacmanLocation = startPacmanLocation;
-			lives -= 1;
-		} else { 											//DOT
+		} else if  (positionState[possibleX][possibleY] == "DOT"){
 			points += 100;
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
 			currentPacmanLocation = possiblePacmanLocation;
 		}
 		
-		if (lives == 0) {
-			gameOver = true;
-			start();
-		}
-		
-			System.out.println("Current Pacman" + currentPacmanLocation);//DEBUG
+			System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
 			System.out.println("Points " + points);//DEBUG
 			System.out.println("Lives  " + lives);//DEBUG	
 	}
