@@ -205,6 +205,7 @@ public class GameModel {
 				circle.setRadius(3.0f);
 				element = circle;
 				break;
+
 		}
 		return element;
 	}
