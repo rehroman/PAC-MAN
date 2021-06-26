@@ -287,6 +287,14 @@ public class GameModel {
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
 			currentPacmanLocation = possiblePacmanLocation;
+			
+		} else if (positionState[possibleX][possibleY] == "PACMAN"){
+			positionState[currentX][currentY] = "EMPTY";
+			positionState[possibleX][possibleY] = "PACMAN";
+			currentPacmanLocation = possiblePacmanLocation;		
+			
+		} else {
+			System.out.println("\n\nError in pacmanMove: positionState is not is not defined\n\n");
 		}
 		
 			System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG

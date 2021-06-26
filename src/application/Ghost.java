@@ -25,7 +25,7 @@ public class Ghost extends Thread {
 				while (gameModel.gameOver == false) {
 
 					try {
-						sleep(5000); // TODO adjust step time
+						sleep(3000); // TODO adjust step time
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
 						System.out.println("Thread " + ghostID + " was interrupted, Failed to complete operation");
@@ -52,7 +52,6 @@ public class Ghost extends Thread {
 		Random randomInt = new Random();
 		
 		Point2D possibleLocation = currentGhostLocation;
-		
 		
 		//moving straight or making turn in random direction 
 		int turnDecision = randomInt.nextInt(7);
