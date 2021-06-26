@@ -55,7 +55,6 @@ public class GameModel {
 		 currentPacmanLocation = startPacmanLocation;
 		 currentGhost1Location = new Point2D(1,1);
 		 currentGhost2Location = new Point2D(4,1);
-		this.initMap("src/application/Map1.txt"); // old can be removed
 
 	}
 
@@ -206,14 +205,6 @@ public class GameModel {
 				circle.setRadius(3.0f);
 				element = circle;
 				break;
-			/*case "BORDER":
-				Rectangle r = new Rectangle();
-				r.setX(50);
-				r.setY(50);
-				r.setWidth(40);
-				r.setHeight(40);
-				element = r;
-				break;*/
 		}
 		return element;
 	}
