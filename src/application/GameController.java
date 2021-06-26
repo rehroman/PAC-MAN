@@ -31,7 +31,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		root.requestFocus();
 		
 		//Initialize the Grid
-		GridPane pane = GameModel.createGameWorld(1); //
+		GridPane pane = GameModel.initMap(1); //
 
 		/*pane.setGridLinesVisible(true);*/ //TODO remove later
 		gamePane.setCenter(pane);

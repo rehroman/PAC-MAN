@@ -58,66 +58,30 @@ public class GameModel {
 	 * 7 means DOT
 	 */
 	
-	public void initMap(String map) {
+	public GridPane initMap(int map) {
 		/*columnNumber = 8;
 		rowNumber = 3;*/
-		
-		positionState = world1;
 
+		/* returns level/world */
+		positionState = this.getWorld(map);
+		/*fills grid with elements*/
+		GridPane world = this.createGameWorld(positionState);
+
+		/*TODO: noch drin lassen */
 		 //set initial Start Locations of Ghosts and Pacman according to MAP
 		 startPacmanLocation = new Point2D(3,1);
 		 currentPacmanLocation = startPacmanLocation;
 		 currentGhost1Location = new Point2D(2,1);
-		 
-		 //set the States of of the fields in the grid
-		 /*positionState[0][2]= "BORDER";
-		 positionState[1][2]= "BORDER";
-		 positionState[2][2]= "BORDER";
-		 positionState[3][2]= "BORDER";
-		 positionState[4][2]= "BORDER";
-		 positionState[5][2]= "BORDER";
-		 positionState[6][2]= "BORDER";
-		 positionState[7][2]= "BORDER";
-		 
-		 positionState[0][1]= "BORDER";
-		 positionState[1][1]= "GHOST1";
-		 positionState[2][1]= "EMPTY";
-		 positionState[3][1]= "PACMAN";
-		 positionState[4][1]= "EMPTY";
-		 positionState[5][1]= "DOT";
-		 positionState[6][1]= "EMPTY";
-		 positionState[7][1]= "BORDER";
-		 
-		 positionState[0][0]= "BORDER";
-		 positionState[1][0]= "BORDER";
-		 positionState[2][0]= "BORDER";
-		 positionState[3][0]= "BORDER";
-		 positionState[4][0]= "BORDER";
-		 positionState[5][0]= "BORDER";
-		 positionState[6][0]= "BORDER";
-		 positionState[7][0]= "BORDER";*/
+
+		return world;
 	}
-	 String[][] world1 = {
-		{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
-		{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"},
-		{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
-		{"BORDER", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "CHERRY", "BORDER"},
-		{"BORDER", "BORDER", "CHERRY", "BORDER", "BORDER", "BORDER", "BORDER"},
-		{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},
-	};
 
 	/*==================GAMEWORLD==========================*/
 
 	// GameWorld int [row][column]
-
-	public GridPane createGameWorld(int selectedLevel) {
+	private String [][] getWorld (int selectedLevel){
 
 		String [][] world = null;
-		GridPane grid = new GridPane();
-
-		/*needed to calculate the width and height of each cell (in %)*/
-		rowNumber = 0;
-		columnNumber = 0;
 
 		/*set different levels*/
 		switch(selectedLevel) {
@@ -150,6 +114,17 @@ public class GameModel {
 				break;
 		}
 
+		return world;
+	}
+
+	public GridPane createGameWorld(String [][] world) {
+
+		GridPane grid = new GridPane();
+
+		/*needed to calculate the width and height of each cell (in %)*/
+		rowNumber = 0;
+		columnNumber = 0;
+
 		/* set elements of world on GridPane
 			1) first loops over the row of the selected world
 		   	2) then for each element in that row the element is created and added to GridPane */
@@ -173,7 +148,6 @@ public class GameModel {
 
 		return grid;
 	};
-
 
 	public ImageView createGameElementImages(String gameElement){
 		ImageView element = null;
@@ -233,16 +207,7 @@ public class GameModel {
 		return element;
 	}
 
-
-	/*TODO: wenn am Ende nicht benötigt, können calculateHeightOfSingleRow + calculateWidthOfSingleColumn gelöscht werden*/
-	private double calculateHeightOfSingleRow(int rowNumber){
-		double height = (100/rowNumber);
-		return height;
-	}
-	private double calculateWidthOfSingleColumn(int columnNumber){
-		double width = (100/columnNumber);
-		return width;
-	}
+	/*TODO: Funktion die automatisch die Zelle in Grid setzt die verändert wurde am besten getriggert über binding*/
 
 	private void setRowAndColumnHeight(int rowNumber, int columnNumber, GridPane grid){
 		/*calculates the percentage (width & height) that each cell should occupy*/
