@@ -24,7 +24,7 @@ public class Ghost extends Thread {
 				while (gameModel.gameOver == false) {
 
 					try {
-						sleep(200); // TODO adjust step time
+						sleep(3000); // TODO adjust step time
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
 						System.out.println("Thread " + ghostID + " was interrupted, Failed to complete operation");
@@ -60,9 +60,10 @@ public class Ghost extends Thread {
 			possibleLocation = gameModel.movePoint(randomDirection.nextInt(4), currentGhostLocation);
 		}
 		
-		
+		//if next Location of Ghost is flagged as PACMAN, reduce by one live and reset PACMAN 
 		if (possibleLocation.getX() == gameModel.currentPacmanLocation.getX() && possibleLocation.getY() == gameModel.currentPacmanLocation.getY()) {
 			gameModel.currentPacmanLocation = gameModel.startPacmanLocation;
+			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation.getY()]= "PACMAN";
 			gameModel.lives -= 1;
 			System.out.println("LIVE LOST TRIGGER! Location "+ possibleLocation  + " Lives: " + gameModel.lives); //DEBUG
 		}
