@@ -15,8 +15,10 @@ import javafx.scene.layout.GridPane;
 
 public class GameController implements EventHandler<KeyEvent> {
 	@FXML BorderPane gamePane;
-	@FXML Label nameLabel;
+	@FXML Label playerLabel;
 	@FXML Label pointsLabel;
+	String username;
+	int points;
 
 	int rowNumber;
 	int columnNumber;
@@ -31,19 +33,19 @@ public class GameController implements EventHandler<KeyEvent> {
 		GameModel = new GameModel();
 		root.requestFocus();
 		
-		//Initialize the Grid
-
+		//Initialize the Grid with GameLevel
 		pane = GameModel.getGridPane();
 		/*pane.setGridLinesVisible(true);*/ //TODO remove later
+
 		gamePane.setCenter(pane);
 	}
 	
 	public void displayName(String username) {
-		nameLabel.setText("Spieler: " + username);
+		playerLabel.setText("Spieler: " + username);
 	}
 	
 	public void setPoints(int points) {
-		nameLabel.setText("Punkte: " + points);
+		pointsLabel.setText("Punkte: " + points);
 	}
 	
 	public void exitGame (ActionEvent e) {
