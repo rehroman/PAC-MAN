@@ -72,6 +72,7 @@ public class Ghost extends Thread {
 		if (possibleLocation.getX() == gameModel.currentPacmanLocation.getX() && possibleLocation.getY() == gameModel.currentPacmanLocation.getY()) {
 			gameModel.currentPacmanLocation = gameModel.startPacmanLocation;
 			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation.getY()]= "PACMAN";
+			// TODO Timos movePacManImage muss hier rein
 			gameModel.lives -= 1;
 			System.out.println("LIVE LOST TRIGGER! Location "+ possibleLocation  + " Lives: " + gameModel.lives); //DEBUG
 		}
