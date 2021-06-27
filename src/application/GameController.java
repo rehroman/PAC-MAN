@@ -25,15 +25,16 @@ public class GameController implements EventHandler<KeyEvent> {
 	private Image ghost1;
 	
 	private GameModel GameModel;
+	private GridPane pane;
 
 	public void init(Parent root) {
 		GameModel = new GameModel();
 		root.requestFocus();
 		
 		//Initialize the Grid
-		GridPane pane = GameModel.initMap(1); //
 
-		/*pane.setGridLinesVisible(true);*/ //TODO remove later
+		pane = GameModel.world; // TODO: mittels binding GridPane aus Model heraussetzen
+		pane.setGridLinesVisible(true); //TODO remove later
 		gamePane.setCenter(pane);
 	}
 	
@@ -54,13 +55,21 @@ public class GameController implements EventHandler<KeyEvent> {
 	public void handle(KeyEvent e) {
 		  KeyCode code = e.getCode();
 		if(code == KeyCode.RIGHT) {
-			GameModel.pacmanMove(0);	
+			GameModel.pacmanMove(0);
+			this.pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		} else if (code == KeyCode.DOWN) {
-			GameModel.pacmanMove(1);	
+			GameModel.pacmanMove(1);
+			this.pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		} else if (code == KeyCode.LEFT) {
-			GameModel.pacmanMove(2);	
+			GameModel.pacmanMove(2);
+			this.pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		} else if (code == KeyCode.UP) {
-			GameModel.pacmanMove(3);	
+			GameModel.pacmanMove(3);
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		}
 		//pacMan.setLayoutX(Pacman.pacmanLocation[0]);
 		//pacMan.setLayoutY(Pacman.pacmanLocation[1]);
