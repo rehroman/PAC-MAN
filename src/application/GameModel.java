@@ -41,8 +41,7 @@ public class GameModel {
 
 	public GameModel() {
 		this.start();
-		/*TODO: wieder reinnehmen*/
-		/*moveGhosts();*/
+		moveGhosts();
 	}
 	
 
@@ -191,7 +190,6 @@ public class GameModel {
 				circle.setRadius(3.0f);
 				element = circle;
 				break;
-
 		}
 		return element;
 	}
@@ -235,6 +233,8 @@ public class GameModel {
 	public void moveGhosts (){
 			 new Ghost(this,0,currentGhost1Location);
 			 new Ghost(this,1,currentGhost2Location);
+			 //new Ghost(this,1,currentGhost2Location);
+
 	}
 
 	public void pacmanMove(int direction) {
@@ -274,6 +274,14 @@ public class GameModel {
 			positionState[possibleX][possibleY] = "PACMAN";
 			movePacManImage(direction ,possibleX, possibleY);
 			currentPacmanLocation = possiblePacmanLocation;
+
+		} else if (positionState[possibleX][possibleY] == "PACMAN"){
+			positionState[currentX][currentY] = "EMPTY";
+			positionState[possibleX][possibleY] = "PACMAN";
+			currentPacmanLocation = possiblePacmanLocation;
+
+		} else {
+			System.out.println("\n\nError in pacmanMove: positionState is not is not defined\n\n");
 		}
 		
 			System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
@@ -342,6 +350,6 @@ public class GameModel {
 	 public GridPane getGridPane(){
 		return world;
 	 }
-	
+
 
 }
