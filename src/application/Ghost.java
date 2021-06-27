@@ -1,9 +1,13 @@
 package application;
 
 import javafx.geometry.Point2D;
+
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Ghost extends Thread {
+public class Ghost extends Thread implements GhostObservable {
+	
+	private ArrayList<GhostObserver> observers;
 
 	Point2D ghostLocation;
 	private GameModel gameModel;
@@ -15,6 +19,10 @@ public class Ghost extends Thread {
 		this.ghostLocation = new Point2D(currentGhostLocation.getX(), currentGhostLocation.getY());
 		this.ghostID = ghostID;
 		this.gameModel = gameModel;
+		
+		// ArrayList for the registered observers
+		
+		observers = new ArrayList<GhostObserver>();
 
 		// Using its own thread for every Ghost
 		Thread t = new Thread() {
@@ -28,7 +36,7 @@ public class Ghost extends Thread {
 						sleep(3000); // TODO adjust step time
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
-						System.out.println("Thread " + ghostID + " was interrupted, Failed to complete operation");
+						System.out.println("Thread Ghost of" + ghostID + " was interrupted, Failed to complete operation");
 						e.printStackTrace();
 					}
 
@@ -36,11 +44,11 @@ public class Ghost extends Thread {
 					System.out.println("Current Position Ghost " + ghostID + " " + ghostLocation);
 
 					if (ghostID == 0) {
-						gameModel.currentGhost1Location = moveGhost(ghostLocation);
+						ghostLocation = moveGhost(ghostLocation);
 					} else if (ghostID == 1) {
-						gameModel.currentGhost2Location = moveGhost(ghostLocation);
+						ghostLocation = moveGhost(ghostLocation);
 					}
-					
+					notifyObservers(); // notify Observer about changes
 				}
 				// TODO has to stop when new game starts
 			}
@@ -89,6 +97,28 @@ public class Ghost extends Thread {
 		System.out.println("New Position Ghost " + ghostID + " " + ghostLocation); //DEBUG
 		
 		return ghostLocation;
+	}
+
+	@Override
+	public void register(GhostObserver newObserver) {
+		//add new Observer
+		observers.add(newObserver);
+		
+	}
+
+	@Override
+	public void unregister(GhostObserver removeObserver) {
+		//remove Observer
+		int observerID = observers.indexOf(removeObserver);
+		observers.remove(observerID);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(GhostObserver observer : observers){
+			observer.update(ghostLocation);
+		}
+		
 	}
 
 }

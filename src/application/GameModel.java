@@ -11,18 +11,18 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class GameModel {
+public class GameModel implements GhostObserver {
 
 	/*TODO points + lives vielleicht in UserClass*/
 	int points;
 	int lives;
 	Boolean gameOver;
+	
 
+	//Properties for Ghosts
 	Point2D currentGhost1Location;
 	Point2D currentGhost2Location;
 	Point2D currentGhost3Location;
-
-
 
 	// Properties for PacMan
 	Point2D startPacmanLocation = new Point2D(1,1);
@@ -229,11 +229,16 @@ public class GameModel {
 		}
 	}
 	
-	//instantiate ghosts
+		//instantiate ghosts
 	public void moveGhosts (){
-			 new Ghost(this,0,currentGhost1Location);
-			 new Ghost(this,1,currentGhost2Location);
-			 //new Ghost(this,1,currentGhost2Location);
+
+		Ghost ghost_1= new Ghost (this,0,currentGhost1Location);
+		
+		//Register as Observer
+		ghost_1.register(this);
+	
+		//new Ghost(this,1,currentGhost2Location);
+	    //new Ghost(this,1,currentGhost2Location);
 
 	}
 
@@ -350,6 +355,14 @@ public class GameModel {
 	 public GridPane getGridPane(){
 		return world;
 	 }
+
+
+	@Override
+	public void update(Point2D ghostLocation) {
+		System.out.println("Observe Update about to start currentGhost1Location OLD Value: "+ currentGhost1Location );
+		currentGhost1Location = ghostLocation;
+		System.out.println("Observe Update done currentGhost1Location NEW Value: "+ currentGhost1Location );
+	}
 
 
 }
