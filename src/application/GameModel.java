@@ -1,9 +1,5 @@
 package application;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -13,24 +9,29 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-import static javafx.scene.paint.Color.BLACK;
-
 public class GameModel {
-	Boolean gameOver;
-	Point2D startPacmanLocation;
-	Point2D currentPacmanLocation;
-	int currentpacmanDirection;
-	Point2D currentGhost1Location;
-	Point2D currentGhost2Location;
-	int columnNumber;
-	int rowNumber;
-	String[][] positionState;
-	
+
+	/*TODO points + lives vielleicht in UserClass*/
 	int points;
 	int lives;
+	Boolean gameOver;
+
+	Point2D currentGhost1Location;
+	Point2D currentGhost2Location;
+	Point2D currentGhost3Location;
+
+
+
+	// Properties for PacMan
+	Point2D startPacmanLocation = new Point2D(1,1);
+	Point2D currentPacmanLocation; // always holds PacMan location
+	int currentPacManDirection;
+
+	// Properties for Level
+	String[][] positionState; // hold positions of all elements, needed to render grid
+	GridPane world;
 
 	/*loading images*/
 	Image pacMan_Right = new Image("/Icons/PacMan_Right.png");
@@ -47,113 +48,95 @@ public class GameModel {
 	public void start() {
 		points = 0;
 		lives = 3;
-		currentpacmanDirection = 1;
+		currentPacManDirection = 1;
 		gameOver = false;
+
+		positionState = this.getLevel(1);
+
+		currentPacmanLocation = this.setPacManInWorld((int) startPacmanLocation.getX(),(int) startPacmanLocation.getY());
+
+		world = this.renderLevel(positionState);
 		 //TODO set initial Start Locations of Ghosts and Pacman according to MAP
-		 startPacmanLocation = new Point2D(3,1);
-		 currentPacmanLocation = startPacmanLocation;
+		 /*currentPacmanLocation = new Point2D(3,1);*/
 		 currentGhost1Location = new Point2D(1,1);
 		 currentGhost2Location = new Point2D(4,1);
-
 	}
 
-	/* 
-	 * positionState Key:
-	 * 0 means EMPTY
-	 * 1 means CHERRY
-	 * 2 means BORDER (solid-blue.png)
-	 * 3 means PACMAN
-	 * 4,5,6 means GHOSTS
-	 * 7 means DOT
-	 */
-	
-	public GridPane initMap(int map) {
-		/*columnNumber = 8;
-		rowNumber = 3;*/
-
-		/* returns level/world */
-		positionState = this.getWorld(map);
-		/*fills grid with elements*/
-		GridPane world = this.createGameWorld(positionState);
-
-		/*TODO: noch drin lassen */
-		 //set initial Start Locations of Ghosts and Pacman according to MAP
-		 startPacmanLocation = new Point2D(3,1);
-		 currentPacmanLocation = startPacmanLocation;
-		 currentGhost1Location = new Point2D(2,1);
-
-		return world;
+	public Point2D setPacManInWorld(int xCoordinate, int yCoordinate){
+		positionState [xCoordinate][yCoordinate] = "PACMAN";
+		return new Point2D(xCoordinate,yCoordinate);
 	}
+
 
 	/*==================GAMEWORLD==========================*/
 
-	// GameWorld int [row][column]
-	private String [][] getWorld (int selectedLevel){
-
-		String [][] world = null;
+	private String [][] getLevel(int selectedLevel){
+		/*always use a 15 x 15 world because of the size; world[row][column]*/
+		String [][] level = null;
 
 		/*set different levels*/
 		switch(selectedLevel) {
-			/*always use a 15 x 15 world because of the size*/
 			case 1:
-				world = new String[][]{
+				level = new String[][]{
 						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
-						{"BORDER", "DOT",      "DOT",  "DOT",     "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"},// 1
-						{"BORDER", "DOT",    "BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 2
-						{"BORDER", "EMPTY", "BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 3
-						{"BORDER", "DOT",    "BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 4
-						{"BORDER", "DOT",    "BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 5
-						{"BORDER", "CHERRY",   "DOT",  "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 6
-						{"BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 7
-						{"BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 8
-						{"BORDER", "DOT",    "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 9
-						{"BORDER", "DOT",      "DOT",  "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 10
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 11
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 12
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 13
+						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 1
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 2
+						{"BORDER", "CHERRY", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 3
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 4
+						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER", "DOT", "BORDER"}, // 5
+						{"BORDER", "DOT", "DOT", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 6
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 7
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 8
+						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 9
+						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 10
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 11
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 12
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 13
 						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
 						//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 			case 2:
-				world = new String[][]{{"GHOST", "GHOST", "GHOST", "GHOST"},
+				level = new String[][]{{"GHOST", "GHOST", "GHOST", "GHOST"},
 						{"GHOST", "PACMAN", "PACMAN", "GHOST"},
 						{"GHOST", "GHOST", "GHOST", "GHOST"},
 				};
 				break;
 		}
 
-		return world;
+		return level;
 	}
 
-	public GridPane createGameWorld(String [][] world) {
-
+	public GridPane renderLevel(String [][] world) {
 		GridPane grid = new GridPane();
 
 		/*needed to calculate the width and height of each cell (in %)*/
-		rowNumber = 0;
-		columnNumber = 0;
+		int rowNumber = 0;
+		int columnNumber = 0;
 
 		/* set elements of world on GridPane
-			1) first loops over the row of the selected world
-		   	2) then for each element in that row the element is created and added to GridPane */
+		1) first loops over the row of the selected world
+		2) then for each element in that row the element is created and added to GridPane */
 		for (rowNumber = 0; rowNumber < world.length; rowNumber++) { // 1)
 			for (columnNumber = 0; columnNumber < world[rowNumber].length; columnNumber++) { // 2)
-				/*for images --> creates and adds image to grid*/
-				if (world[rowNumber][columnNumber].equals("BORDER") || world[rowNumber][columnNumber].equals("CHERRY") || world[rowNumber][columnNumber].equals("GHOST")){
+				/*for IMAGES --> creates and adds image to grid*/
+				if (world[rowNumber][columnNumber].equals("PACMAN") || world[rowNumber][columnNumber].equals("BORDER") || world[rowNumber][columnNumber].equals("CHERRY") || world[rowNumber][columnNumber].equals("GHOST")){
 					ImageView element = this.createGameElementImages(world[rowNumber][columnNumber]);
 					grid.add(element, columnNumber, rowNumber);
 				}
-				/*for shape --> creates and adds shape to grid*/
+				/*for SHAPE --> creates and adds shape to grid*/
 				if (world[rowNumber][columnNumber].equals("DOT")){
 					Shape element = this.createGameElementShapes(world[rowNumber][columnNumber]);
 					grid.add(element, columnNumber, rowNumber);
+				}
+				if (world[rowNumber][columnNumber].equals("EMPTY")){
+					continue;
 				}
 			}
 		}
 
 		/* sets the width and height of single cells in % */
-		this.setRowAndColumnHeight(rowNumber, columnNumber, grid);
+		setRowAndColumnHeight(rowNumber, columnNumber, grid);
 
 		return grid;
 	};
@@ -164,6 +147,9 @@ public class GameModel {
 		 switch(gameElement) {
 			case "PACMAN":
 				ImageView imageViewPacMan = new ImageView(this.pacMan_Right);
+
+				//TODO rotate PacMan einbauen
+				imageViewPacMan = rotateImageInDirection(currentPacManDirection, imageViewPacMan);
 				imageViewPacMan.setFitHeight(30);
 				imageViewPacMan.setFitWidth(30);
 				element = imageViewPacMan;
@@ -208,8 +194,6 @@ public class GameModel {
 		return element;
 	}
 
-	/*TODO: Funktion die automatisch die Zelle in Grid setzt die verändert wurde am besten getriggert über binding*/
-
 	private void setRowAndColumnHeight(int rowNumber, int columnNumber, GridPane grid){
 		/*calculates the percentage (width & height) that each cell should occupy*/
 
@@ -248,23 +232,23 @@ public class GameModel {
 	//instantiate ghosts
 	public void moveGhosts (){
 			 new Ghost(this,0,currentGhost1Location);
+			 new Ghost(this,1,currentGhost2Location);
 			 //new Ghost(this,1,currentGhost2Location);
 
 	}
 
-
-
 	public void pacmanMove(int direction) {
 		
-		//calculate new possible location
+		//calculate new possible x/y-coordinates
 		Point2D possiblePacmanLocation = movePoint(direction, currentPacmanLocation);
-		currentpacmanDirection = direction;
+		int possibleX = (int) possiblePacmanLocation.getX();
+		int possibleY = (int) possiblePacmanLocation.getY();
+
+		currentPacManDirection = direction;
 
 		System.out.println("Possible Pacman" + possiblePacmanLocation);//DEBUG
-		
-		int possibleX = (int) possiblePacmanLocation.getX();		
-		int possibleY = (int) possiblePacmanLocation.getY();
-		
+
+		//current x/y-coordinates
 		int currentX = (int) currentPacmanLocation.getX();		
 		int currentY = (int) currentPacmanLocation.getY();
 		
@@ -272,12 +256,14 @@ public class GameModel {
 		if (positionState[possibleX][possibleY] == "EMPTY") {
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
+			movePacManImage(direction, possibleX, possibleY);
 			currentPacmanLocation = possiblePacmanLocation;
 			
 		} else if (positionState[possibleX][possibleY] == "CHERRY") {
 			points += 500;
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
+			movePacManImage(direction ,possibleX, possibleY);
 			currentPacmanLocation = possiblePacmanLocation;
 			
 		} else if (positionState[possibleX][possibleY] == "BORDER") {
@@ -286,13 +272,14 @@ public class GameModel {
 			points += 100;
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
+			movePacManImage(direction ,possibleX, possibleY);
 			currentPacmanLocation = possiblePacmanLocation;
-			
+
 		} else if (positionState[possibleX][possibleY] == "PACMAN"){
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
-			currentPacmanLocation = possiblePacmanLocation;		
-			
+			currentPacmanLocation = possiblePacmanLocation;
+
 		} else {
 			System.out.println("\n\nError in pacmanMove: positionState is not is not defined\n\n");
 		}
@@ -327,6 +314,42 @@ public class GameModel {
 		
 		return possibleLocation;
 	}
-	
+
+	public void movePacManImage(int direction, int xCoordinates, int yCoordinates){
+		ImageView imageViewPacMan = new ImageView(this.pacMan_Right);
+		imageViewPacMan.setFitHeight(30);
+		imageViewPacMan.setFitWidth(30);
+
+		// rotate PacMan depending on direction
+
+		/*position von pacman ändern*/
+		positionState[xCoordinates][yCoordinates] = "PACMAN";
+		/*welt neu rendern*/
+		world = renderLevel(positionState);
+	}
+
+	public ImageView rotateImageInDirection(int direction, ImageView imageToRotate){
+		// rotates given image depending on direction
+		switch(direction) {
+			case 0: // DOWN
+				imageToRotate.setRotate(90);
+				break;
+			case 1: // RIGHT --> default
+				break;
+			case 2: // UP
+				imageToRotate.setRotate(-90);
+				break;
+			case 3: // LEFT
+				imageToRotate.setRotate(180);
+				break;
+		}
+
+		return imageToRotate;
+	}
+
+	 public GridPane getGridPane(){
+		return world;
+	 }
+
 
 }

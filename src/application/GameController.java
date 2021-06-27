@@ -15,8 +15,10 @@ import javafx.scene.layout.GridPane;
 
 public class GameController implements EventHandler<KeyEvent> {
 	@FXML BorderPane gamePane;
-	@FXML Label nameLabel;
+	@FXML Label playerLabel;
 	@FXML Label pointsLabel;
+	String username;
+	int points;
 
 	int rowNumber;
 	int columnNumber;
@@ -25,24 +27,25 @@ public class GameController implements EventHandler<KeyEvent> {
 	private Image ghost1;
 	
 	private GameModel GameModel;
+	private GridPane pane;
 
 	public void init(Parent root) {
 		GameModel = new GameModel();
 		root.requestFocus();
 		
-		//Initialize the Grid
-		GridPane pane = GameModel.initMap(1); //
-
+		//Initialize the Grid with GameLevel
+		pane = GameModel.getGridPane();
 		/*pane.setGridLinesVisible(true);*/ //TODO remove later
+
 		gamePane.setCenter(pane);
 	}
 	
 	public void displayName(String username) {
-		nameLabel.setText("Spieler: " + username);
+		playerLabel.setText("Spieler: " + username);
 	}
 	
 	public void setPoints(int points) {
-		nameLabel.setText("Punkte: " + points);
+		pointsLabel.setText("Punkte: " + points);
 	}
 	
 	public void exitGame (ActionEvent e) {
@@ -53,14 +56,23 @@ public class GameController implements EventHandler<KeyEvent> {
 @Override
 	public void handle(KeyEvent e) {
 		  KeyCode code = e.getCode();
-		if(code == KeyCode.RIGHT) {
-			GameModel.pacmanMove(0);	
-		} else if (code == KeyCode.DOWN) {
-			GameModel.pacmanMove(1);	
-		} else if (code == KeyCode.LEFT) {
-			GameModel.pacmanMove(2);	
+		if(code == KeyCode.DOWN) {
+			GameModel.pacmanMove(0);
+			/* deletes old grid and sets new one after pacman moved*/
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
+		} else if (code == KeyCode.RIGHT) {
+			GameModel.pacmanMove(1);
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		} else if (code == KeyCode.UP) {
-			GameModel.pacmanMove(3);	
+			GameModel.pacmanMove(2);
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
+		} else if (code == KeyCode.LEFT) {
+			GameModel.pacmanMove(3);
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
 		}
 		//pacMan.setLayoutX(Pacman.pacmanLocation[0]);
 		//pacMan.setLayoutY(Pacman.pacmanLocation[1]);
