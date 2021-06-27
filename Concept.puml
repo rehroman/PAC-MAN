@@ -1,0 +1,11 @@
+@startuml
+Ghost <|-- Figure
+
+Pacman <|-- Figure
+
+Class Figure
+Figure : moveUp()
+Figure : moveDown()
+Figure : moveRight()
+Figure : moveLeft()
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+class Main
+Main : +start(Stage primaryStage)
+Main : +{static}main(String[] args)
+
+class MenuController
+MenuController : -Parent parent
+MenuController : -Scene scene
+MenuController : -Stage stage
+MenuController : +switchToGame(ActionEvent e)
+MenuController : +switchToName(ActionEvent e)
+MenuController : +switchToRanking(ActionEvent e)
+MenuController : +switchToControls(ActionEvent e)
+MenuController : +switchToMenu(ActionEvent e)
+MenuController : +endGame(ActionEvent e)
+
+NameController <|-- MenuController
+
+GameController <|-- MenuController
+
+ControlsController <|-- MenuController
+
+RankingController <|-- MenuController
+
+entity 1_Menu
+
+entity 2_Name
+
+entity 3_Game
+
+entity 4_Controls
+
+entity 5_ranking
+
+/'Main -> 1_Menu
+1_Menu <-> MenuController
+MenuController -> 2_Name
+MenuController -> 3_Game
+MenuController - 4_Controls
+MenuController - 5_ranking
+2_Name -> NameController
+3_Game -> GameController
+4_Controls -> ControlsController
+5_ranking -> RankingController'/
+@enduml
