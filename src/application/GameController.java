@@ -33,8 +33,8 @@ public class GameController implements EventHandler<KeyEvent> {
 		
 		//Initialize the Grid
 
-		pane = GameModel.world; // TODO: mittels binding GridPane aus Model heraussetzen
-		pane.setGridLinesVisible(true); //TODO remove later
+		pane = GameModel.getGridPane();
+		/*pane.setGridLinesVisible(true);*/ //TODO remove later
 		gamePane.setCenter(pane);
 	}
 	
@@ -54,19 +54,20 @@ public class GameController implements EventHandler<KeyEvent> {
 @Override
 	public void handle(KeyEvent e) {
 		  KeyCode code = e.getCode();
-		if(code == KeyCode.RIGHT) {
+		if(code == KeyCode.DOWN) {
 			GameModel.pacmanMove(0);
-			this.pane.getChildren().clear();
+			/* deletes old grid and sets new one after pacman moved*/
+			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
-		} else if (code == KeyCode.DOWN) {
+		} else if (code == KeyCode.RIGHT) {
 			GameModel.pacmanMove(1);
-			this.pane.getChildren().clear();
-			gamePane.setCenter(GameModel.getGridPane());
-		} else if (code == KeyCode.LEFT) {
-			GameModel.pacmanMove(2);
-			this.pane.getChildren().clear();
+			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
 		} else if (code == KeyCode.UP) {
+			GameModel.pacmanMove(2);
+			pane.getChildren().clear();
+			gamePane.setCenter(GameModel.getGridPane());
+		} else if (code == KeyCode.LEFT) {
 			GameModel.pacmanMove(3);
 			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
