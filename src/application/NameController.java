@@ -25,14 +25,13 @@ public class NameController extends MenuController {
 	@FXML
 	private TextField name_NameField;
 	
-	public void switchToGame (Scene eventScene) throws IOException {
+	public void switchToGameFromScene (Scene eventScene) throws IOException {
 		String username = name_NameField.getText();
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("3_Game.fxml"));
 		root = loader.load();
 		
 		GameController gameController = loader.getController();
-		gameController.displayName(username);
 		
 		stage = (Stage)eventScene.getWindow();
 		scene = new Scene(root);
@@ -43,37 +42,21 @@ public class NameController extends MenuController {
 		stage.setScene(scene);
 		stage.show();
 
-		gameController.init(root);
+		gameController.init(root, username);
 	}
 
-	public void switchToMenu (Scene eventScene) throws IOException {
-		// call menu controller?
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("1_Menu.fxml"));
-		root = loader.load();
-		stage = (Stage)eventScene.getWindow();
-		scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	public void clickSwitchToGame(ActionEvent actionEvent) throws IOException {
+	public void switchToGame(ActionEvent actionEvent) throws IOException {
 		Scene eventScene = ((Node)actionEvent.getSource()).getScene();
-		switchToGame(eventScene);
-	}
-
-	public void clickSwitchToMenu(ActionEvent actionEvent) throws IOException {
-		Scene eventScene = ((Node)actionEvent.getSource()).getScene();
-		switchToMenu(eventScene);
+		switchToGameFromScene(eventScene);
 	}
 
 	public void keyListener(KeyEvent keyEvent) throws IOException {
 		Scene eventScene = ((Node)keyEvent.getSource()).getScene();
 		if (keyEvent.getCode() == KeyCode.ENTER) {
-			switchToGame(eventScene);
+			switchToGameFromScene(eventScene);
 		}
 		else if (keyEvent.getCode() == KeyCode.ESCAPE) {
-			switchToMenu(eventScene);
+			switchToMenuFromScene(eventScene);
 		}
 	}
 }

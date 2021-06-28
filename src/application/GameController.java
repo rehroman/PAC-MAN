@@ -29,7 +29,9 @@ public class GameController implements EventHandler<KeyEvent> {
 	private GameModel GameModel;
 	private GridPane pane;
 
-	public void init(Parent root) {
+	public void init(Parent root, String username) {
+		displayName(username);
+
 		GameModel = new GameModel();
 		root.requestFocus();
 		

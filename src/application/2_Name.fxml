@@ -18,40 +18,34 @@
             onKeyPressed="#keyListener">
    <top>
       <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Bitte gib deinen Namen ein:">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-         </children>
+         <Label text="Bitte gib deinen Namen ein:">
+            <font>
+               <Font size="30.0"/>
+            </font>
+         </Label>
       </VBox>
    </top>
    <center>
       <VBox alignment="CENTER" maxWidth="400.0" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="name_NameField">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="50.0" right="50.0" />
-               </VBox.margin>
-            </TextField>
-         </children>
+         <TextField fx:id="name_NameField">
+            <VBox.margin>
+               <Insets bottom="20.0" left="50.0" right="50.0"/>
+            </VBox.margin>
+         </TextField>
       </VBox>
    </center>
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="name_Back" mnemonicParsing="false" onAction="#clickSwitchToMenu" text="Zurück">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="name_OK" mnemonicParsing="false" onAction="#clickSwitchToGame" text="OK">
-               <HBox.margin>
-                  <Insets left="350.0" />
-               </HBox.margin>
-            </Button>
-         </children>
+         <Button fx:id="name_Back" mnemonicParsing="false" onAction="#switchToMenu" text="Zurück">
+            <HBox.margin>
+               <Insets/>
+            </HBox.margin>
+         </Button>
+         <Button fx:id="name_OK" mnemonicParsing="false" onAction="#switchToGame" text="OK">
+            <HBox.margin>
+               <Insets left="350.0"/>
+            </HBox.margin>
+         </Button>
       </HBox>
    </bottom>
 </BorderPane>
