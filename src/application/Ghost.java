@@ -33,7 +33,7 @@ public class Ghost extends Thread implements GhostObservable {
 				while (gameModel.gameOver == false) {
 
 					try {
-						sleep(3000); // TODO adjust step time
+						sleep(500); // TODO adjust step time
 					} catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
 						System.out.println("Thread Ghost of" + ghostID + " was interrupted, Failed to complete operation");
@@ -78,6 +78,7 @@ public class Ghost extends Thread implements GhostObservable {
 		
 		// if next Location of Ghost is flagged as PACMAN, reduce one live and reset PACMAN 
 		if (possibleLocation.getX() == gameModel.currentPacmanLocation.getX() && possibleLocation.getY() == gameModel.currentPacmanLocation.getY()) {
+			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation.getY()]= "EMPTY";
 			gameModel.currentPacmanLocation = gameModel.startPacmanLocation;
 			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation.getY()]= "PACMAN";
 			// TODO Timos movePacManImage muss hier rein
@@ -116,7 +117,7 @@ public class Ghost extends Thread implements GhostObservable {
 	@Override
 	public void notifyObservers() {
 		for(GhostObserver observer : observers){
-			observer.update(ghostLocation);
+			observer.update(ghostID, ghostLocation);
 		}
 		
 	}

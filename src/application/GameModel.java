@@ -148,7 +148,7 @@ public class GameModel implements GhostObserver {
 			case "PACMAN":
 				ImageView imageViewPacMan = new ImageView(this.pacMan_Right);
 
-				//TODO rotate PacMan einbauen
+
 				imageViewPacMan = rotateImageInDirection(currentPacManDirection, imageViewPacMan);
 				imageViewPacMan.setFitHeight(30);
 				imageViewPacMan.setFitWidth(30);
@@ -233,9 +233,10 @@ public class GameModel implements GhostObserver {
 	public void moveGhosts (){
 
 		Ghost ghost_1= new Ghost (this,0,currentGhost1Location);
-		
+		Ghost ghost_2= new Ghost (this,1,currentGhost2Location);
 		//Register as Observer
 		ghost_1.register(this);
+		ghost_2.register(this);
 	
 		//new Ghost(this,1,currentGhost2Location);
 	    //new Ghost(this,1,currentGhost2Location);
@@ -286,7 +287,7 @@ public class GameModel implements GhostObserver {
 			currentPacmanLocation = possiblePacmanLocation;
 
 		} else {
-			System.out.println("\n\nError in pacmanMove: positionState is not is not defined\n\n");
+			System.out.println("\n\nError in pacmanMove: positionState is not defined\n\n");
 		}
 		
 			System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
@@ -321,14 +322,20 @@ public class GameModel implements GhostObserver {
 	}
 
 	public void movePacManImage(int direction, int xCoordinates, int yCoordinates){
-		ImageView imageViewPacMan = new ImageView(this.pacMan_Right);
-		imageViewPacMan.setFitHeight(30);
-		imageViewPacMan.setFitWidth(30);
-
 		// rotate PacMan depending on direction
 
 		/*position von pacman ändern*/
 		positionState[xCoordinates][yCoordinates] = "PACMAN";
+		/*welt neu rendern*/
+		world = renderLevel(positionState);
+	}
+	
+	public void moveGhostImage(int xCoordinates, int yCoordinates){
+
+		positionState[(int)currentGhost1Location.getX()][(int)currentGhost1Location.getY()] = "EMPTY";
+
+		/*position von ghost ändern*/
+		positionState[xCoordinates][yCoordinates] = "GHOST";
 		/*welt neu rendern*/
 		world = renderLevel(positionState);
 	}
@@ -358,9 +365,19 @@ public class GameModel implements GhostObserver {
 
 
 	@Override
-	public void update(Point2D ghostLocation) {
+	public void update(int ghostID, Point2D ghostLocation) {
 		System.out.println("Observe Update about to start currentGhost1Location OLD Value: "+ currentGhost1Location );
-		currentGhost1Location = ghostLocation;
+		switch(ghostID) {
+			case 0:
+				moveGhostImage((int)ghostLocation.getX(),(int)ghostLocation.getY());
+				currentGhost1Location = ghostLocation;
+				world = renderLevel(positionState);
+				break;
+			case 1:
+				currentGhost2Location = ghostLocation;
+				break;
+		}
+		
 		System.out.println("Observe Update done currentGhost1Location NEW Value: "+ currentGhost1Location );
 	}
 
