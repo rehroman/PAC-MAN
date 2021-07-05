@@ -10,55 +10,52 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MenuController">
    <center>
-      <VBox alignment="CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: Gray;" BorderPane.alignment="BOTTOM_CENTER">
-         <children>
-            <Button fx:id="menu_Start" mnemonicParsing="false" onAction="#switchToName" text="STARTEN">
-               <VBox.margin>
-                  <Insets top="18.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Button>
-            <Button fx:id="menu_Ranking" mnemonicParsing="false" onAction="#switchToRanking" text="BESTENLISTE">
-               <VBox.margin>
-                  <Insets top="45.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="menu_Controls" mnemonicParsing="false" onAction="#switchToControls" text="STEUERUNG">
-               <VBox.margin>
-                  <Insets top="45.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="menu_Close" mnemonicParsing="false" onAction="#endGame" text="BEENDEN">
-               <VBox.margin>
-                  <Insets top="45.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-         </children>
+      <VBox alignment="CENTER" maxHeight="300.0" maxWidth="400.0" prefHeight="300.0" prefWidth="400.0"
+            style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
+         <Button fx:id="menu_Start" mnemonicParsing="false" onAction="#switchToName" text="STARTEN">
+            <VBox.margin>
+               <Insets top="18.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="15.0"/>
+            </font>
+            <cursor>
+               <Cursor fx:constant="DEFAULT"/>
+            </cursor>
+         </Button>
+         <Button fx:id="menu_Ranking" mnemonicParsing="false" onAction="#switchToRanking" text="BESTENLISTE">
+            <VBox.margin>
+               <Insets top="45.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="15.0"/>
+            </font>
+         </Button>
+         <Button fx:id="menu_Controls" mnemonicParsing="false" onAction="#switchToControls" text="STEUERUNG">
+            <VBox.margin>
+               <Insets top="45.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="15.0"/>
+            </font>
+         </Button>
+         <Button fx:id="menu_Close" mnemonicParsing="false" onAction="#endGame" text="BEENDEN">
+            <VBox.margin>
+               <Insets top="45.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="15.0"/>
+            </font>
+         </Button>
       </VBox>
    </center>
    <top>
       <VBox maxHeight="100.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" prefHeight="100.0" prefWidth="600.0" text="PAC-MAN" textAlignment="CENTER">
-               <font>
-                  <Font size="40.0" />
-               </font>
-            </Label>
-         </children>
+         <Label alignment="CENTER" prefHeight="100.0" prefWidth="600.0" text="PAC-MAN" textAlignment="CENTER">
+            <font>
+               <Font size="40.0"/>
+            </font>
+         </Label>
       </VBox>
    </top>
 </BorderPane>

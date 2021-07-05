@@ -11,50 +11,45 @@
 
 <BorderPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="gameExit" mnemonicParsing="false" onAction="#exitGame" text="Beenden" />
-            <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="380.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@../Icons/heart.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="507.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/heart.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="518.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/heart.png" />
-               </image>
-            </ImageView>
-         </children>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;"
+            BorderPane.alignment="CENTER">
+         <Button fx:id="gameExit" mnemonicParsing="false" onAction="#exitGame" text="Beenden"/>
+         <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true"
+                    preserveRatio="true" fx:id="heart1">
+            <HBox.margin>
+               <Insets left="380.0"/>
+            </HBox.margin>
+            <Image url="@../Icons/heart.png"/>
+         </ImageView>
+         <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="507.0" layoutY="19.0" pickOnBounds="true"
+                    preserveRatio="true" fx:id="heart2">
+            <Image url="@../Icons/heart.png"/>
+         </ImageView>
+         <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="518.0" layoutY="19.0" pickOnBounds="true"
+                    preserveRatio="true" fx:id="heart3">
+            <Image url="@../Icons/heart.png"/>
+         </ImageView>
       </HBox>
    </bottom>
    <top>
       <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="playerLabel" prefHeight="30.0" prefWidth="276.0" text="Spieler: ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" top="10.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="191.0" text="Punkte:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="150.0" right="5.0" top="10.0" />
-               </HBox.margin>
-            </Label>
-         </children>
+         <Label fx:id="playerLabel" prefHeight="30.0" prefWidth="276.0" text="Spieler: ">
+            <font>
+               <Font size="20.0"/>
+            </font>
+            <HBox.margin>
+               <Insets left="10.0" top="10.0"/>
+            </HBox.margin>
+         </Label>
+         <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0"
+                prefWidth="191.0" text="Punkte:">
+            <font>
+               <Font size="20.0"/>
+            </font>
+            <HBox.margin>
+               <Insets left="150.0" right="5.0" top="10.0"/>
+            </HBox.margin>
+         </Label>
       </HBox>
    </top>
 </BorderPane>
