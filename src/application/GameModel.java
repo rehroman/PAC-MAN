@@ -63,8 +63,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 		lives = 3;
 		dotsCount = 0;
 		currentPacManDirection = 1;
-		gameOver = false;
-		gameWin = false;
 
 		positionState = this.getLevel(1);
 		
@@ -76,6 +74,9 @@ public class GameModel implements GhostObserver, MovementObservable {
 
 
 		this.renderLevel(positionState);
+		
+		gameOver = false;
+		gameWin = false;
 		//TODO set initial Start Locations of Ghosts and Pacman according to MAP
 	}
 
@@ -123,12 +124,15 @@ public class GameModel implements GhostObserver, MovementObservable {
 		return level;
 	}
 
-	/* count the number of dots in the current loaded Level*/
+	/**
+	 *  counts the number of dots in the current loaded Level
+	 *  */
 	private void countDots(String[][] levelWorld) {
 		for (int rowNumber = 0; rowNumber < levelWorld.length; rowNumber++) { // 1)
 			for (int columnNumber = 0; columnNumber < levelWorld[rowNumber].length; columnNumber++) { // 2)
 				if (levelWorld[rowNumber][columnNumber].equals("DOT")){;
-					dotsCount++;
+					//
+				dotsCount++;
 				}
 			}	
 		}
@@ -138,7 +142,10 @@ public class GameModel implements GhostObserver, MovementObservable {
 	private void renderLevel(String [][] worldElements) {
 		GridPane grid = new GridPane();
 
-		/*needed to calculate the width and height of each cell (in %)*/
+		/**
+		 * needed to calculate the width and height of each cell (in %)
+		 * 
+		 * */
 		int rowNumber = 0;
 		int columnNumber = 0;
 
@@ -169,7 +176,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		
 		
 		if (dotsCount == 0) {
-			gameWin = true;	
+			gameWin = true;
 			System.out.println("Win State " + gameWin);//DEBUG;
 			start();
 			}
@@ -340,28 +347,28 @@ public class GameModel implements GhostObserver, MovementObservable {
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "GHOST1":
-				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
 				positionState[currentX][currentY] = "EMPTY";
 				currentPacmanLocation = startPacmanLocation;
 				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
 				// TODO Timos movePacManImage muss hier rein
 				lives -= 1;
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location " + " Lives: " + lives); //DEBUG
 				break;
 			case "GHOST2":
-				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
 				positionState[currentX][currentY] = "EMPTY";
 				currentPacmanLocation = startPacmanLocation;
 				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
 				// TODO Timos movePacManImage muss hier rein
 				lives -= 1;
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location " + " Lives: " + lives); //DEBUG
 				break;
 			case "GHOST3":
-				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
 				positionState[currentX][currentY] = "EMPTY";
 				currentPacmanLocation = startPacmanLocation;
 				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
 				// TODO Timos movePacManImage muss hier rein
 				lives -= 1;
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location " + " Lives: " + lives); //DEBUG
 				break;
 			default:
 				break;
@@ -454,7 +461,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 			positionState[oldX][oldY] = previousGhostState[ghostId];
 		}
 		else {
-			positionState[oldX][oldY] = "EMPTY";
+			positionState[oldX][oldY] = "DOT";
 		}
 
 		/* Geist auf neue Position setzen */
