@@ -6,7 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The game's main class.
+ */
 public class Main extends Application {
+	/**
+	 * Prepares the stage for showing the game.
+	 * @param primaryStage The game stage.
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {

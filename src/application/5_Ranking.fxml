@@ -9,11 +9,11 @@
    <center>
       <VBox alignment="CENTER" maxHeight="392.0" maxWidth="400.0" prefHeight="392.0" prefWidth="400.0" style="-fx-background-color: Gray;" BorderPane.alignment="BOTTOM_CENTER">
          <TableView fx:id="rankingTable">
-            <!--<columns>
-               <TableColumn prefWidth="133.3" text="Platz" />
-               <TableColumn prefWidth="133.3" text="Name" />
-               <TableColumn prefWidth="133.3" text="Punkte" />
-            </columns>-->
+            <columns>
+               <TableColumn prefWidth="132" text="Platz" fx:id="column1" />
+               <TableColumn prefWidth="132" text="Name" fx:id="column2" />
+               <TableColumn prefWidth="132" text="Punkte" fx:id="column3"/>
+            </columns>
          </TableView>
       </VBox>
    </center>

@@ -20,7 +20,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	int lives;
 	Boolean gameOver;
 
-	private ArrayList<MovementObserver> movementObservers = new ArrayList<MovementObserver>();
+	private final ArrayList<MovementObserver> movementObservers = new ArrayList<MovementObserver>();
 
 	//Properties for Ghosts
 	Point2D currentGhost1Location;

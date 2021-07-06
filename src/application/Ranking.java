@@ -1,27 +1,57 @@
 package application;
 
-public class Ranking {
+/**
+ * Defines a Ranking object.
+ */
+public class Ranking implements Comparable<Ranking> {
 
-    private String rank;
-    private String name;
-    private String points;
+    private final int rank;
+    private final String name;
+    private final int points;
 
-    public Ranking(String rank, String name, String points) {
+    /**
+     * Creates a new Ranking.
+     * @param rank the player's rank
+     * @param name the player's name
+     * @param points the player's points
+     */
+    public Ranking(int rank, String name, int points) {
         this.rank = rank;
         this.name = name;
         this.points = points;
     }
 
-    // getters used by cellFactory
+    /**
+     * Gets the player's name from a ranking object.
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
-    public String getRank() {
+    /**
+     * Gets the rank from a ranking object.
+     * @return the rank
+     */
+    public int getRank() {
         return rank;
     }
 
-    public String getPoints() {
+    /**
+     * Gets the points from a ranking object.
+     * @return the points
+     */
+    public int getPoints() {
         return points;
+    }
+
+    /**
+     * Sorts rankings descending by points.
+     * @param r The ranking object to compare.
+     * @return 1, 0, oder -1
+     */
+    @Override
+    public int compareTo(Ranking r) {
+        return Integer.compare(r.getPoints(), getPoints());
     }
 }

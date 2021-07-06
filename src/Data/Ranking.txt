@@ -1,0 +1,5 @@
+Spieler1,2000
+Spieler2,1500
+Spieler1,1000
+Spieler2,800
+Spieler2,600
