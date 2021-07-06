@@ -12,13 +12,18 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GameModel implements GhostObserver, MovementObservable {
 
 	/*TODO points + lives vielleicht in UserClass*/
 	int points;
 	int lives;
+	int dotsCount;
+	
+	// Properties for GameState
 	Boolean gameOver;
+	Boolean gameWin;
 
 	private ArrayList<MovementObserver> movementObservers = new ArrayList<MovementObserver>();
 
@@ -49,19 +54,26 @@ public class GameModel implements GhostObserver, MovementObservable {
 		this.start();
 		moveGhosts();
 	}
+	
+	/*==================NEWGAME===========================*/
 
 	public void start() {
+		System.out.println("\n\n\n\n--------NEWGAME--------\n\n");//DEBUG;
 		points = 0;
 		lives = 3;
+		dotsCount = 0;
 		currentPacManDirection = 1;
 		gameOver = false;
+		gameWin = false;
 
 		positionState = this.getLevel(1);
-
+		
 		currentPacmanLocation = this.setItemInWorld((int) startPacmanLocation.getX(),(int) startPacmanLocation.getY(), "PACMAN");
+		this.countDots(positionState);
 		currentGhost1Location = setItemInWorld(1,4, "GHOST1");
 		currentGhost2Location = setItemInWorld(5,8, "GHOST2");
 		currentGhost3Location = setItemInWorld(10,6, "GHOST3");
+
 
 		this.renderLevel(positionState);
 		//TODO set initial Start Locations of Ghosts and Pacman according to MAP
@@ -111,6 +123,18 @@ public class GameModel implements GhostObserver, MovementObservable {
 		return level;
 	}
 
+	/* count the number of dots in the current loaded Level*/
+	private void countDots(String[][] levelWorld) {
+		for (int rowNumber = 0; rowNumber < levelWorld.length; rowNumber++) { // 1)
+			for (int columnNumber = 0; columnNumber < levelWorld[rowNumber].length; columnNumber++) { // 2)
+				if (levelWorld[rowNumber][columnNumber].equals("DOT")){;
+					dotsCount++;
+				}
+			}	
+		}
+		System.out.println("Dots intial gezählt " + dotsCount);//DEBUG;
+	}
+
 	private void renderLevel(String [][] worldElements) {
 		GridPane grid = new GridPane();
 
@@ -140,7 +164,16 @@ public class GameModel implements GhostObserver, MovementObservable {
 					continue;
 				}*/
 			}
+			
 		}
+		
+		
+		if (dotsCount == 0) {
+			gameWin = true;	
+			System.out.println("Win State " + gameWin);//DEBUG;
+			start();
+			}
+		
 
 		/* sets the width and height of single cells in % */
 		setRowAndColumnHeight(rowNumber, columnNumber, grid);
@@ -294,47 +327,67 @@ public class GameModel implements GhostObserver, MovementObservable {
 				break;
 			case "DOT":
 				points += 100;
+				dotsCount -= 1;
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
 				movePacManImage(possibleX, possibleY);
 				currentPacmanLocation = possiblePacmanLocation;
+				System.out.println("Dots übrig " + dotsCount);//DEBUG;
 				break;
 			case "PACMAN":
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
+			case "GHOST1":
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
+				positionState[currentX][currentY] = "EMPTY";
+				currentPacmanLocation = startPacmanLocation;
+				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
+				// TODO Timos movePacManImage muss hier rein
+				lives -= 1;
+				break;
+			case "GHOST2":
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
+				positionState[currentX][currentY] = "EMPTY";
+				currentPacmanLocation = startPacmanLocation;
+				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
+				// TODO Timos movePacManImage muss hier rein
+				lives -= 1;
+				break;
+			case "GHOST3":
+				System.out.println("LIVE LOST TRIGGER from GameModelClass! Location "+ currentPacmanLocation  + " Lives: " + lives); //DEBUG
+				positionState[currentX][currentY] = "EMPTY";
+				currentPacmanLocation = startPacmanLocation;
+				positionState[(int) currentPacmanLocation.getX()][(int) currentPacmanLocation.getY()]= "PACMAN";
+				// TODO Timos movePacManImage muss hier rein
+				lives -= 1;
+				break;
 			default:
-				// GHOST TODO
-				System.out.println(positionState[currentX][currentY]);
 				break;
 		}
 
-		System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
-		System.out.println("Points " + points);//DEBUG
-		System.out.println("Lives  " + lives);//DEBUG
+		//System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
+		//System.out.println("Points " + points);//DEBUG
+		//System.out.println("Lives  " + lives);//DEBUG
 	}
 
 	public Point2D movePoint(int direction, Point2D possibleLocation) {
 		//right
 		if(direction == 0) {
 			possibleLocation = possibleLocation.add(1,0);
-			//System.out.println("Direction" + direction);//DEBUG
 		}
 		//down
 		else if(direction == 1) {
 			possibleLocation = possibleLocation.add(0,1);
-			//System.out.println("Direction" + direction);//DEBUG
 		}
 		//left
 		else if(direction == 2) {
 			possibleLocation = possibleLocation.add(-1,0);
-			//System.out.println("Direction" + direction);//DEBUG
 		}
 		//up
 		else {
 			possibleLocation = possibleLocation.add(0,-1);
-			//System.out.println("Direction" + direction);//DEBUG
 		}
 
 		return possibleLocation;
@@ -388,7 +441,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 				currentGhost3Location = ghostLocation;
 				ghostState = "GHOST3";
 				break;
-
 		}
 
 		//System.out.println("Observe Update about to start currentGhost1Location OLD Value: "+ currentGhost1Location );

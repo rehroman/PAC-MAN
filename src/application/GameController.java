@@ -82,6 +82,11 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 
 	public void setLives(int lives) {
 		switch (lives) {
+			case 3:
+				heart1.setVisible(true);
+				heart2.setVisible(true);
+				heart3.setVisible(true);
+				break;
 			case 2:
 				heart3.setVisible(false);
 				break;

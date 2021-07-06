@@ -33,12 +33,12 @@ public class Ghost extends Thread implements GhostObservable {
 					sleep(500); // TODO adjust step time
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
-					System.out.println("Thread Ghost of" + ghostID + " was interrupted, Failed to complete operation");
+					System.out.println("Thread Ghost of" + ghostID + " was interrupted, failed to complete operation");
 					e.printStackTrace();
 				}
 
-				//System.out.println("\n\nGhost " + ghostID + " STEP");
-				//System.out.println("Current Position Ghost " + ghostID + " " + ghostLocation);
+				//System.out.println("\n\nGhost " + ghostID + " STEP"); //DEBUG
+				//System.out.println("Current Position Ghost " + ghostID + " " + ghostLocation); //DEBUG
 
 				moveGhost(ghostLocation);
 				notifyObservers(); // notify Observer about changes
@@ -50,12 +50,11 @@ public class Ghost extends Thread implements GhostObservable {
 
 	public void moveGhost(Point2D currentGhostLocation) {
 		Random randomInt = new Random();
-
 		Point2D possibleLocation;
 
 		//moving straight or making turn in random direction
 		int turnDecision = randomInt.nextInt(7);
-		if (turnDecision >= 6) {
+		if (turnDecision == 6) {
 			direction = randomInt.nextInt(4);
 		}
 		possibleLocation = gameModel.movePoint(direction, currentGhostLocation);
@@ -73,11 +72,11 @@ public class Ghost extends Thread implements GhostObservable {
 			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation.getY()]= "PACMAN";
 			// TODO Timos movePacManImage muss hier rein
 			gameModel.lives -= 1;
-			System.out.println("LIVE LOST TRIGGER! Location "+ possibleLocation  + " Lives: " + gameModel.lives); //DEBUG
+			System.out.println("LIVE LOST TRIGGER from GhostClass! Location "+ possibleLocation  + " Lives: " + gameModel.lives); //DEBUG
 		}
 
 		// RESTART when GAME-OVER
-		if (gameModel.lives == 0) {
+		if (gameModel.lives <= 0) {
 			gameModel.gameOver = true;
 			gameModel.start();
 		}
