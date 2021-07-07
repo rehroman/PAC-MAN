@@ -103,7 +103,7 @@ public class Ghost extends Thread implements GhostObservable {
 	}
 
 	/**
-	 * Notifies the rgistered observers.
+	 * Notifies the registered observers.
 	 */
 	@Override
 	public void notifyObservers() {

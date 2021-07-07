@@ -13,7 +13,6 @@ import javafx.scene.shape.Shape;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The GameModel holds most game logic.
@@ -29,7 +28,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	Boolean gameOver;
 	Boolean gameWin;
 
-	private final ArrayList<MovementObserver> movementObservers = new ArrayList<MovementObserver>();
+	private final ArrayList<MovementObserver> movementObservers = new ArrayList<>();
 
 	//Properties for Ghosts
 	Point2D currentGhost1Location;
@@ -152,7 +151,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		dotsCount = 0;
 		for (int rowNumber = 0; rowNumber < levelWorld.length; rowNumber++) { // 1)
 			for (int columnNumber = 0; columnNumber < levelWorld[rowNumber].length; columnNumber++) { // 2)
-				if (levelWorld[rowNumber][columnNumber].equals("DOT")){;
+				if (levelWorld[rowNumber][columnNumber].equals("DOT")){
 				dotsCount++;
 				}
 			}
@@ -206,7 +205,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		switch(gameElement) {
 			case "PACMAN":
 				ImageView imageViewPacMan = setImageView(this.pacMan_Right, 30, 30);
-				element = rotateImageInDirection(currentPacManDirection, imageViewPacMan);;
+				element = rotateImageInDirection(currentPacManDirection, imageViewPacMan);
 				break;
 			case "GHOST1":
 				element = setImageView(this.ghost1, 30, 30);
@@ -319,7 +318,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 					endLevel();
 					return;
 				}
-				// System.out.println("Dots �brig " + dotsCount);//DEBUG;
 			}
 			positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";
@@ -335,6 +333,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 			System.out.println("LIVE LOST TRIGGER from GameModelClass! Location " + " Lives: " + lives); //DEBUG
 		}
 		else if (positionInhabitant.equals("PACMAN")) {
+			// ToDo: remove?
 			System.out.println("obstacle pacman");//DEBUG;
 			// ??
 			/*positionState[currentX][currentY] = "EMPTY";
@@ -353,13 +352,13 @@ public class GameModel implements GhostObserver, MovementObservable {
 		Ranking ranking = new Ranking(0, username, points);
 		try {
 			rankingData.updateRanking(ranking);
-			System.out.println("ranking updated");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		// start new game
-		start(2);
+		if (gameWin) start(2);
+		if (gameOver) start(1);
 	}
 
 	/**
