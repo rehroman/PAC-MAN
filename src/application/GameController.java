@@ -38,7 +38,6 @@ public class GameController implements EventHandler<KeyEvent> {
 		gamePane.setCenter(pane);
 
 		startAutoRefreshWorld();
-		/*pane.setGridLinesVisible(true);*/ //TODO remove later
 	}
 	
 	public void displayName(String username) {
@@ -46,7 +45,7 @@ public class GameController implements EventHandler<KeyEvent> {
 	}
 	
 	public void exitGame (ActionEvent e) {
-		System.exit(0); //TODO something else?
+		System.exit(0);
 	}
 
 	private void movementSubscription() {
