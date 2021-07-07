@@ -57,7 +57,10 @@ public class Ghost extends Thread implements GhostObservable {
 		possibleLocation = gameModel.movePoint(direction, currentGhostLocation);
 
 		// if new field would be a Border, try random new directions until free one found
-		while(gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()].equals("BORDER")) {
+		while(gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()].equals("BORDER")
+				|| gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()].equals("GHOST1")
+				|| gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()].equals("GHOST2")
+				|| gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()].equals("GHOST3")) {
 			direction = randomInt.nextInt(4);
 			possibleLocation = gameModel.movePoint(direction, currentGhostLocation);
 		}

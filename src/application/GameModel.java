@@ -24,7 +24,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	int lives;
 	int dotsCount;
 	String username;
-	
+
 	// Properties for GameState
 	Boolean gameOver;
 	Boolean gameWin;
@@ -59,7 +59,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 */
 	public GameModel(String username) {
 		this.username = username;
-		this.start();
+		this.start(1);
 		initGhosts();
 	}
 	
@@ -68,23 +68,20 @@ public class GameModel implements GhostObserver, MovementObservable {
 	/**
 	 * Starts the game.
 	 */
-	public void start() {
+	public void start(int level) {
 		System.out.println("\n\n\n\n--------NEWGAME--------\n\n");//DEBUG;
-		points = 0;
-		lives = 1;
-		dotsCount = 0;
+		if (level == 1) points = 0;
+		lives = 3;
 		currentPacManDirection = 1;
 		gameOver = false;
 		gameWin = false;
 
-		positionState = this.getLevel(1);
-
-		//TODO set initial Start Locations of Ghosts and Pacman according to MAP
+		positionState = this.getLevel(level);
+		
 		currentPacmanLocation = this.setItemInWorld((int) startPacmanLocation.getX(),(int) startPacmanLocation.getY(), "PACMAN");
-		this.countDots(positionState);
-		currentGhost1Location = setItemInWorld(1,4, "GHOST1");
-		currentGhost2Location = setItemInWorld(5,8, "GHOST2");
-		currentGhost3Location = setItemInWorld(10,6, "GHOST3");
+		currentGhost1Location = setItemInWorld(7,4, "GHOST1");
+		currentGhost2Location = setItemInWorld(7,10, "GHOST2");
+		currentGhost3Location = setItemInWorld(11,7, "GHOST3");
 
 		this.renderLevel(positionState);
 	}
@@ -105,28 +102,41 @@ public class GameModel implements GhostObserver, MovementObservable {
 			case 1:
 				level = new String[][]{
 						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
-						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 1
-						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 2
-						{"BORDER", "CHERRY", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 3
-						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 4
-						{"BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER", "DOT", "BORDER"}, // 5
-						{"BORDER", "DOT", "DOT", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "DOT", "BORDER"}, // 6
-						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 7
-						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 8
-						{"BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER"}, // 9
-						{"BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 10
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 11
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "BORDER", "DOT", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 12
-						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "DOT", "BORDER"}, // 13
+						{"BORDER", "DOT",     "DOT",    "DOT",   "DOT",     "DOT",   "DOT",    "BORDER",  "DOT",    "DOT",     "DOT",   "DOT",    "DOT",    "DOT",   "BORDER"}, // 1
+						{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 2
+						{"BORDER", "CHERRY",  "DOT",    "DOT",   "DOT",    "DOT",    "DOT",     "DOT",    "DOT",    "DOT",     "DOT",   "DOT",    "DOT",   "CHERRY", "BORDER"}, // 3
+						{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 4
+						{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "DOT",    "DOT",     "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 5
+						{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 6
+						{"BORDER", "DOT",    "BORDER",  "DOT",   "DOT",    "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 7
+						{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "CHERRY",  "DOT",   "CHERRY","BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 8
+						{"BORDER", "DOT",     "DOT",    "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 9
+						{"BORDER", "DOT",    "BORDER",  "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",     "DOT",   "DOT",   "BORDER",  "DOT",   "BORDER"}, // 10
+						{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 11
+						{"BORDER", "DOT",    "BORDER", "BORDER","BORDER",  "DOT",    "BORDER",  "BORDER","BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 12
+						{"BORDER", "DOT",    "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER"}, // 13
 						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
 						//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 			case 2:
-				// ToDo?
-				level = new String[][]{{"GHOST", "GHOST", "GHOST", "GHOST"},
-						{"GHOST", "PACMAN", "PACMAN", "GHOST"},
-						{"GHOST", "GHOST", "GHOST", "GHOST"},
+				level = new String[][]{
+					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
+					{"BORDER", "DOT",     "DOT",    "DOT",   "DOT",     "DOT",   "CHERRY", "BORDER",  "CHERRY",    "DOT",     "DOT",   "DOT",    "DOT",    "DOT",   "BORDER"}, // 1
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 2
+					{"BORDER", "CHERRY",  "DOT",    "DOT",   "DOT",    "DOT",    "DOT",     "DOT",    "DOT",    "DOT",     "DOT",   "DOT",    "DOT",   "CHERRY", "BORDER"}, // 3
+					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 4
+					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "DOT",    "DOT",     "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 5
+					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 6
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "DOT",    "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 7
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "CHERRY",  "DOT",   "CHERRY","BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 8
+					{"BORDER", "DOT",     "DOT",    "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 9
+					{"BORDER", "DOT",    "BORDER",  "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",     "DOT",   "DOT",   "BORDER",  "DOT",   "BORDER"}, // 10
+					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 11
+					{"BORDER", "DOT",    "BORDER", "BORDER","BORDER",  "DOT",    "BORDER",  "BORDER","BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 12
+					{"BORDER", "DOT",    "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER"}, // 13
+					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
+					//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 		}
@@ -139,11 +149,11 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 * @param levelWorld the current level's world
 	 */
 	private void countDots(String[][] levelWorld) {
-		for (String[] row : levelWorld) { // 1)
-			for (String cell : row) { // 2)
-				if (cell.equals("DOT")) {
-					;
-					dotsCount++;
+		dotsCount = 0;
+		for (int rowNumber = 0; rowNumber < levelWorld.length; rowNumber++) { // 1)
+			for (int columnNumber = 0; columnNumber < levelWorld[rowNumber].length; columnNumber++) { // 2)
+				if (levelWorld[rowNumber][columnNumber].equals("DOT")){;
+				dotsCount++;
 				}
 			}
 		}
@@ -177,6 +187,9 @@ public class GameModel implements GhostObserver, MovementObservable {
 				}
 			}
 		}
+		
+		this.countDots(positionState);
+		
 
 		/* sets the width and height of single cells in % */
 		setRowAndColumnHeight(rowNumber, columnNumber, grid);
@@ -278,7 +291,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 * @param direction the direction of movement
 	 */
 	public void pacmanMove(int direction) {
-		//calculate new possible x/y-coordinates
 		Point2D possiblePacmanLocation = movePoint(direction, currentPacmanLocation);
 		int possibleX = (int) possiblePacmanLocation.getX();
 		int possibleY = (int) possiblePacmanLocation.getY();
@@ -329,6 +341,8 @@ public class GameModel implements GhostObserver, MovementObservable {
 			positionState[possibleX][possibleY] = "PACMAN";
 			currentPacmanLocation = possiblePacmanLocation;*/
 		}
+
+		if (lives < 0) lives = 0;
 	}
 
 	public void endLevel()
@@ -345,7 +359,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		}
 
 		// start new game
-		start();
+		start(2);
 	}
 
 	/**
@@ -431,7 +445,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 			positionState[oldX][oldY] = previousGhostState[ghostId];
 		}
 		else {
-			positionState[oldX][oldY] = "DOT";
+			positionState[oldX][oldY] = "EMPTY";
 		}
 
 		// set ghost to new position
