@@ -37,24 +37,8 @@ public class GameController implements EventHandler<KeyEvent> {
 		pane = GameModel.getGridPane();
 		gamePane.setCenter(pane);
 
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask(){
-			@Override
-			public void run() {
-				//what you want to do
-				Platform.runLater(() -> {
-					System.out.println("geht in timer rein");
-					pane.getChildren().clear();
-					gamePane.setCenter(GameModel.getGridPane());
-				});
-			}
-		}, 0, 1000);
+		startAutoRefreshWorld();
 		/*pane.setGridLinesVisible(true);*/ //TODO remove later
-
-
-
-		// subscribe to movement updates
-		/*movementSubscription();*/
 	}
 	
 	public void displayName(String username) {
@@ -124,8 +108,18 @@ public class GameController implements EventHandler<KeyEvent> {
 		});
 	}*/
 
-	private void startRefreshTimer(){
-
+	private void startAutoRefreshWorld(){
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask(){
+			@Override
+			public void run() {
+				//what you want to do
+				Platform.runLater(() -> {
+					pane.getChildren().clear();
+					gamePane.setCenter(GameModel.getGridPane());
+				});
+			}
+		}, 0, 1000);
 	}
 
 }

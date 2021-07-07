@@ -30,7 +30,7 @@ public class Ghost extends Thread implements GhostObservable {
 			while (!gameModel.gameOver) {
 
 				try {
-					sleep(500); // TODO adjust step time
+					sleep(600); // TODO adjust step time
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 					System.out.println("Thread Ghost of" + ghostID + " was interrupted, Failed to complete operation");

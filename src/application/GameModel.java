@@ -47,7 +47,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 
 	public GameModel() {
 		this.start();
-		moveGhosts();
+		initializeGhosts();
 	}
 
 	public void start() {
@@ -248,7 +248,8 @@ public class GameModel implements GhostObserver, MovementObservable {
 	}
 
 	//instantiate ghosts
-	private void moveGhosts () {
+	/*TODO: name ändern*/
+	private void initializeGhosts () {
 		Ghost ghost_1 = new Ghost (this,0, currentGhost1Location);
 		Ghost ghost_2 = new Ghost(this,1,currentGhost2Location);
 		Ghost ghost_3 = new Ghost(this,2,currentGhost3Location);
