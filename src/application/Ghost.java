@@ -7,12 +7,10 @@ import java.util.Random;
 
 public class Ghost extends Thread implements GhostObservable {
 
-	private ArrayList<GhostObserver> observers;
-
+	private final ArrayList<GhostObserver> observers;
 	Point2D ghostLocation;
-	private GameModel gameModel;
-	private int ghostID;
-	private int direction = 0;
+	private final GameModel gameModel; //needed?
+	private final int ghostID;
 
 	public Ghost(GameModel gameModel, int ghostID, Point2D currentGhostLocation) {
 
@@ -20,11 +18,8 @@ public class Ghost extends Thread implements GhostObservable {
 		this.ghostID = ghostID;
 		this.gameModel = gameModel;
 
-		/**
-		 *
-		 * @param observers ArrayList for the registered observers
-		 */
-		observers = new ArrayList<GhostObserver>();
+		//ArrayList for the registered observers
+		observers = new ArrayList<>();
 
 		// Using its own thread for every Ghost
 		Thread t = new Thread(() -> {
@@ -39,24 +34,22 @@ public class Ghost extends Thread implements GhostObservable {
 					e.printStackTrace();
 				}
 
-				//System.out.println("\n\nGhost " + ghostID + " STEP"); //DEBUG
-				//System.out.println("Current Position Ghost " + ghostID + " " + ghostLocation); //DEBUG
-
 				moveGhost(ghostLocation);
-				notifyObservers(); // notify Observer about changes
+
+				// notify Observers about changes
+				notifyObservers();
 			}
 			// TODO has to stop when new game starts
 		});
 		t.start();
 	}
 
-	public void moveGhost(Point2D currentGhostLocation) {
+	private void moveGhost(Point2D currentGhostLocation) {
 		Random randomInt = new Random();
 		Point2D possibleLocation;
+		int direction = 0;
 
-		/*
-		 * @param turnDecision random number for moving straight or making turn in random direction
-		 */
+		//turnDecision random number for moving straight or making turn in random direction
 		int turnDecision = randomInt.nextInt(7);
 		if (turnDecision == 6) {
 			direction = randomInt.nextInt(4);
@@ -79,37 +72,35 @@ public class Ghost extends Thread implements GhostObservable {
 			System.out.println("LIVE LOST TRIGGER from GhostClass! Location "+ possibleLocation  + " Lives: " + gameModel.lives); //DEBUG
 		}
 
-		// RESTART when GAME-OVER
-		if (gameModel.lives <= 0) {
+		// RESTART when GAME-OVER (call only once)
+		if (gameModel.lives <= 0 && !gameModel.gameOver) {
 			gameModel.gameOver = true;
-			gameModel.start();
+			gameModel.endLevel();
 		}
 
 		ghostLocation = possibleLocation;
-
-		//System.out.println("New Position Ghost " + ghostID + " " + ghostLocation); //DEBUG
 	}
 
-	/*
-	 * 	add new Observer
+	/**
+	 * Adds a new observer.
+	 * @param newObserver the observer to add
 	 */
 	@Override
 	public void register(GhostObserver newObserver) {
-
 		observers.add(newObserver);
-
 	}
 
-	/*
-	 * remove Observer
+	/**
+	 * Removes an observer.
+	 * @param removeObserver the observer to remove
 	 */
 	@Override
 	public void unregister(GhostObserver removeObserver) {
-		
 		observers.remove(removeObserver);
 	}
-	/*
-	 * notify registered Observers
+
+	/**
+	 * Notifies the rgistered observers.
 	 */
 	@Override
 	public void notifyObservers() {

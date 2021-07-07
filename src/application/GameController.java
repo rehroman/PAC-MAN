@@ -1,7 +1,6 @@
 package application;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,10 +11,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
+
 /**
  * Starts the game, takes user input and updates the game view.
  */
-public class GameController implements EventHandler<KeyEvent>, MovementObserver {
+public class GameController extends MenuController implements EventHandler<KeyEvent>, MovementObserver {
 	@FXML ImageView heart3;
 	@FXML ImageView heart2;
 	@FXML ImageView heart1;
@@ -29,7 +30,7 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 	public void init(Parent root, String username) {
 		displayName(username);
 
-		GameModel = new GameModel();
+		GameModel = new GameModel(username);
 		root.requestFocus();
 		
 		//Initialize the Grid with GameLevel
@@ -40,12 +41,8 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 		movementSubscription();
 	}
 	
-	public void displayName(String username) {
+	private void displayName(String username) {
 		playerLabel.setText("Spieler: " + username);
-	}
-	
-	public void exitGame (ActionEvent e) {
-		System.exit(0); //TODO something else?
 	}
 
 	private void movementSubscription() {
@@ -69,11 +66,11 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 		setLives(GameModel.getLives());
 	}
 
-	public void setPoints(int points) {
+	private void setPoints(int points) {
 		pointsLabel.setText("Punkte: " + points);
 	}
 
-	public void setLives(int lives) {
+	private void setLives(int lives) {
 		switch (lives) {
 			case 3:
 				heart1.setVisible(true);
@@ -92,11 +89,12 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 		}
 	}
 
+	/**
+	 * Updates the game pane on movement
+	 */
 	@Override
-	public void updateMovement()
-	{
+	public void updateMovement() {
 		Platform.runLater(() -> {
-			/* deletes old grid and sets new one after movement*/
 			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
 		});

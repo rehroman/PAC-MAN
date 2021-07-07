@@ -13,7 +13,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;"
             BorderPane.alignment="CENTER">
-         <Button fx:id="gameExit" mnemonicParsing="false" onAction="#exitGame" text="Beenden"/>
+         <Button fx:id="gameExit" mnemonicParsing="false" onAction="#endGame" text="Beenden"/>
          <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true"
                     preserveRatio="true" fx:id="heart1">
             <HBox.margin>
