@@ -66,7 +66,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		currentPacmanLocation = this.setItemInWorld((int) startPacmanLocation.getX(),(int) startPacmanLocation.getY(), "PACMAN");
 		currentGhost1Location = setItemInWorld(7,4, "GHOST1");
 		currentGhost2Location = setItemInWorld(7,10, "GHOST2");
-		currentGhost3Location = setItemInWorld(11,7, "GHOST3");
+		currentGhost3Location = setItemInWorld(13,7, "GHOST3");
 
 
 		this.renderLevel(positionState);
