@@ -54,7 +54,7 @@ public class Ghost extends Thread implements GhostObservable {
 		Random randomInt = new Random();
 		Point2D possibleLocation;
 
-		/*
+		/**
 		 * @param turnDecision random number for moving straight or making turn in random direction
 		 */
 		int turnDecision = randomInt.nextInt(7);
@@ -85,7 +85,7 @@ public class Ghost extends Thread implements GhostObservable {
 		// RESTART when GAME-OVER
 		if (gameModel.lives <= 0) {
 			gameModel.gameOver = true;
-			gameModel.start();
+			gameModel.start(1);
 		}
 
 		ghostLocation = possibleLocation;
@@ -93,7 +93,7 @@ public class Ghost extends Thread implements GhostObservable {
 		//System.out.println("New Position Ghost " + ghostID + " " + ghostLocation); //DEBUG
 	}
 
-	/*
+	/**
 	 * 	add new Observer
 	 */
 	@Override
@@ -103,7 +103,7 @@ public class Ghost extends Thread implements GhostObservable {
 
 	}
 
-	/*
+	/**
 	 * remove Observer
 	 */
 	@Override

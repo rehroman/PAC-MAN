@@ -51,19 +51,19 @@ public class GameModel implements GhostObserver, MovementObservable {
 	Image border = new Image("/Icons/brick-wall.png");
 
 	public GameModel() {
-		this.start();
+		this.start(1);
 		moveGhosts();
 	}
 	
 	/*==================NEWGAME===========================*/
 
-	public void start() {
+	public void start(int level) {
 		System.out.println("\n\n\n\n--------NEWGAME--------\n\n");//DEBUG;
-		points = 0;
+		if (level == 1) points = 0;
 		lives = 3;
 		currentPacManDirection = 1;
 
-		positionState = this.getLevel(1);
+		positionState = this.getLevel(level);
 		
 		currentPacmanLocation = this.setItemInWorld((int) startPacmanLocation.getX(),(int) startPacmanLocation.getY(), "PACMAN");
 		currentGhost1Location = setItemInWorld(7,4, "GHOST1");
@@ -113,9 +113,23 @@ public class GameModel implements GhostObserver, MovementObservable {
 				};
 				break;
 			case 2:
-				level = new String[][]{{"GHOST", "GHOST", "GHOST", "GHOST"},
-						{"GHOST", "PACMAN", "PACMAN", "GHOST"},
-						{"GHOST", "GHOST", "GHOST", "GHOST"},
+				level = new String[][]{
+					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
+					{"BORDER", "DOT",     "DOT",    "DOT",   "DOT",     "DOT",   "CHERRY", "BORDER",  "CHERRY",    "DOT",     "DOT",   "DOT",    "DOT",    "DOT",   "BORDER"}, // 1
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 2
+					{"BORDER", "CHERRY",  "DOT",    "DOT",   "DOT",    "DOT",    "DOT",     "DOT",    "DOT",    "DOT",     "DOT",   "DOT",    "DOT",   "CHERRY", "BORDER"}, // 3
+					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 4
+					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "DOT",    "DOT",     "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 5
+					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 6
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "DOT",    "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 7
+					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "CHERRY",  "DOT",   "CHERRY","BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 8
+					{"BORDER", "DOT",     "DOT",    "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 9
+					{"BORDER", "DOT",    "BORDER",  "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",     "DOT",   "DOT",   "BORDER",  "DOT",   "BORDER"}, // 10
+					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 11
+					{"BORDER", "DOT",    "BORDER", "BORDER","BORDER",  "DOT",    "BORDER",  "BORDER","BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 12
+					{"BORDER", "DOT",    "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER"}, // 13
+					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
+					//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 		}
@@ -127,6 +141,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 *  counts the number of dots in the current loaded Level
 	 *  */
 	private void countDots(String[][] levelWorld) {
+		dotsCount = 0;
 		for (int rowNumber = 0; rowNumber < levelWorld.length; rowNumber++) { // 1)
 			for (int columnNumber = 0; columnNumber < levelWorld[rowNumber].length; columnNumber++) { // 2)
 				if (levelWorld[rowNumber][columnNumber].equals("DOT")){;
@@ -147,7 +162,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 		int rowNumber = 0;
 		int columnNumber = 0;
 		
-		dotsCount = 0;
 
 		/* set elements of world on GridPane
 		1) first loops over the row of the selected world
@@ -320,14 +334,12 @@ public class GameModel implements GhostObserver, MovementObservable {
 			case "EMPTY":
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "CHERRY":
 				points += 500;
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "DOT":
@@ -335,7 +347,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 				dotsCount -= 1;
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
 				currentPacmanLocation = possiblePacmanLocation;
 				System.out.println("Dots übrig " + dotsCount);//DEBUG;
 				break;
@@ -377,8 +388,10 @@ public class GameModel implements GhostObserver, MovementObservable {
 		if (dotsCount == 0) {
 			gameWin = true;
 			System.out.println("Win State " + gameWin);//DEBUG;
-			start();
+			start(2);
 			}
+		
+		renderLevel(positionState);
 
 		//System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
 		//System.out.println("Points " + points);//DEBUG
@@ -407,14 +420,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 		}
 
 		return possibleLocation;
-	}
-
-	// TODO remove?
-	private void movePacManImage(int xCoordinates, int yCoordinates){
-		/*position von pacman Ã¤ndern*/
-		//positionState[xCoordinates][yCoordinates] = "PACMAN";
-		/*welt neu rendern*/
-		renderLevel(positionState);
 	}
 
 	private ImageView rotateImageInDirection(int direction, ImageView imageToRotate){
