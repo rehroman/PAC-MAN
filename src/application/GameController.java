@@ -13,7 +13,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class GameController implements EventHandler<KeyEvent>, MovementObserver {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class GameController implements EventHandler<KeyEvent> {
 	public ImageView heart3;
 	public ImageView heart2;
 	public ImageView heart1;
@@ -32,12 +35,26 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 		
 		//Initialize the Grid with GameLevel
 		pane = GameModel.getGridPane();
-		/*pane.setGridLinesVisible(true);*/ //TODO remove later
-
 		gamePane.setCenter(pane);
 
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask(){
+			@Override
+			public void run() {
+				//what you want to do
+				Platform.runLater(() -> {
+					System.out.println("geht in timer rein");
+					pane.getChildren().clear();
+					gamePane.setCenter(GameModel.getGridPane());
+				});
+			}
+		}, 0, 1000);
+		/*pane.setGridLinesVisible(true);*/ //TODO remove later
+
+
+
 		// subscribe to movement updates
-		movementSubscription();
+		/*movementSubscription();*/
 	}
 	
 	public void displayName(String username) {
@@ -94,7 +111,7 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 		}
 	}
 
-	@Override
+	/*@Override
 	public void updateMovement()
 	{
 		Platform.runLater(new Runnable() {
@@ -105,5 +122,10 @@ public class GameController implements EventHandler<KeyEvent>, MovementObserver 
 				gamePane.setCenter(GameModel.getGridPane());
 			}
 		});
+	}*/
+
+	private void startRefreshTimer(){
+
 	}
+
 }

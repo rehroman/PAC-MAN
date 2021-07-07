@@ -279,14 +279,14 @@ public class GameModel implements GhostObserver, MovementObservable {
 			case "EMPTY":
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
+				/*movePacManImage(possibleX, possibleY);*/
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "CHERRY":
 				points += 500;
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
+				/*movePacManImage(possibleX, possibleY);*/
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "BORDER":
@@ -296,7 +296,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 				points += 100;
 				positionState[currentX][currentY] = "EMPTY";
 				positionState[possibleX][possibleY] = "PACMAN";
-				movePacManImage(possibleX, possibleY);
+				/*movePacManImage(possibleX, possibleY);*/
 				currentPacmanLocation = possiblePacmanLocation;
 				break;
 			case "PACMAN":
@@ -309,6 +309,9 @@ public class GameModel implements GhostObserver, MovementObservable {
 				System.out.println(positionState[currentX][currentY]);
 				break;
 		}
+
+		// render changes in position state to GridPane
+		renderLevel(positionState);
 
 		System.out.println("New Pacman Location" + currentPacmanLocation);//DEBUG
 		System.out.println("Points " + points);//DEBUG
@@ -340,13 +343,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 		return possibleLocation;
 	}
 
-	// TODO remove?
-	private void movePacManImage(int xCoordinates, int yCoordinates){
-		/*position von pacman ändern*/
-		//positionState[xCoordinates][yCoordinates] = "PACMAN";
-		/*welt neu rendern*/
-		renderLevel(positionState);
-	}
 
 	private ImageView rotateImageInDirection(int direction, ImageView imageToRotate){
 		// rotates given image depending on direction
