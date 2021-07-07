@@ -404,54 +404,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 	}
 
 	/**
-	 * Updates observers about a new ghost location.
-	 * @param ghostId the moving ghost
-	 * @param ghostLocation New location for this ghost.
-	 */
-	@Override
-	public void update(int ghostId, Point2D ghostLocation) {
-		Point2D ghostOldLocation;
-		String ghostState;
-		switch (ghostId) {
-		case 0:
-			ghostOldLocation = currentGhost1Location;
-			currentGhost1Location = ghostLocation;
-			ghostState = "GHOST1";
-			break;
-		case 1:
-			ghostOldLocation = currentGhost2Location;
-			currentGhost2Location = ghostLocation;
-			ghostState = "GHOST2";
-			break;
-		default:
-			ghostOldLocation = currentGhost3Location;
-			currentGhost3Location = ghostLocation;
-			ghostState = "GHOST3";
-			break;
-		}
-
-		// set old ghost position to previous state
-		int oldX = (int) ghostOldLocation.getX();
-		int oldY = (int) ghostOldLocation.getY();
-		if (previousGhostState[ghostId].equals("DOT") || previousGhostState[ghostId].equals("EMPTY")) {
-			positionState[oldX][oldY] = previousGhostState[ghostId];
-		} else {
-			positionState[oldX][oldY] = "EMPTY";
-		}
-
-		// set ghost to new position
-		int xCoordinates = (int) ghostLocation.getX();
-		int yCoordinates = (int) ghostLocation.getY();
-
-		// save content of previous ghost position
-		previousGhostState[ghostId] = positionState[xCoordinates][yCoordinates];
-		positionState[xCoordinates][yCoordinates] = ghostState;
-
-		/* welt neu rendern */
-		renderLevel(positionState);
-	}
-
-	/**
 	 * Gets the "world" grid pane.
 	 * @return the "world" grid pane
 	 */
@@ -501,5 +453,53 @@ public class GameModel implements GhostObserver, MovementObservable {
 		for (MovementObserver movementObserver : movementObservers) {
 			movementObserver.updateMovement();
 		}
+	}
+
+	/**
+	 * Updates observers about a new ghost location.
+	 * @param ghostID the moving ghost
+	 * @param ghostLocation New location for this ghost.
+	 */
+	@Override
+	public void update(int ghostID, Point2D ghostLocation) {
+		Point2D ghostOldLocation;
+		String ghostState;
+		switch (ghostID) {
+			case 0:
+				ghostOldLocation = currentGhost1Location;
+				currentGhost1Location = ghostLocation;
+				ghostState = "GHOST1";
+				break;
+			case 1:
+				ghostOldLocation = currentGhost2Location;
+				currentGhost2Location = ghostLocation;
+				ghostState = "GHOST2";
+				break;
+			default:
+				ghostOldLocation = currentGhost3Location;
+				currentGhost3Location = ghostLocation;
+				ghostState = "GHOST3";
+				break;
+		}
+
+		// set old ghost position to previous state
+		int oldX = (int) ghostOldLocation.getX();
+		int oldY = (int) ghostOldLocation.getY();
+		if (previousGhostState[ghostID].equals("DOT") || previousGhostState[ghostID].equals("EMPTY")) {
+			positionState[oldX][oldY] = previousGhostState[ghostID];
+		} else {
+			positionState[oldX][oldY] = "EMPTY";
+		}
+
+		// set ghost to new position
+		int xCoordinates = (int) ghostLocation.getX();
+		int yCoordinates = (int) ghostLocation.getY();
+
+		// save content of previous ghost position
+		previousGhostState[ghostID] = positionState[xCoordinates][yCoordinates];
+		positionState[xCoordinates][yCoordinates] = ghostState;
+
+		/* welt neu rendern */
+		renderLevel(positionState);
 	}
 }

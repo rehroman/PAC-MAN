@@ -52,17 +52,28 @@ public class Ghost extends Thread implements GhostObservable {
 		if (turnDecision == 6) {
 			direction = randomInt.nextInt(4);
 		}
+
 		possibleLocation = gameModel.movePoint(direction, currentGhostLocation);
 		String positionState = gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()];
 
-		// if new field would be a Border, try random new directions until free one found
+		// if new field would be a Border, try random new directions until free one
+		// found
 		while (positionState.equals("BORDER") || positionState.contains("GHOST")) {
 			direction = randomInt.nextInt(4);
 			possibleLocation = gameModel.movePoint(direction, currentGhostLocation);
+			positionState = gameModel.positionState[(int) possibleLocation.getX()][(int) possibleLocation.getY()];
 		}
 
 		// if next Location of Ghost is flagged as PACMAN, reduce one live and reset PACMAN
-		checkPacmanLocation(possibleLocation);
+		if (possibleLocation.getX() == gameModel.currentPacmanLocation.getX()
+				&& possibleLocation.getY() == gameModel.currentPacmanLocation.getY()) {
+			gameModel.currentPacmanLocation = gameModel.startPacmanLocation;
+			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation
+					.getY()] = "PACMAN";
+			gameModel.lives -= 1;
+			System.out.println(
+					"LIVE LOST TRIGGER from GhostClass! Location " + possibleLocation + " Lives: " + gameModel.lives); // DEBUG
+		}
 
 		checkGameState();
 
