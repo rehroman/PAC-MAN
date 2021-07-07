@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -11,12 +12,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Starts the game, takes user input and updates the game view.
  */
 public class GameController extends MenuController implements EventHandler<KeyEvent>, MovementObserver {
+	@FXML Button gameExit;
 	@FXML ImageView heart3;
 	@FXML ImageView heart2;
 	@FXML ImageView heart1;
@@ -37,7 +40,8 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 		pane = GameModel.getGridPane();
 		gamePane.setCenter(pane);
 
-		// subscribe to movement updates
+		// startAutoRefreshWorld();
+		// alternative: subscribe to movement updates
 		movementSubscription();
 	}
 	
@@ -98,5 +102,19 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
 		});
+	}
+
+	private void startAutoRefreshWorld(){
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask(){
+			@Override
+			public void run() {
+				//what you want to do
+				Platform.runLater(() -> {
+					pane.getChildren().clear();
+					gamePane.setCenter(GameModel.getGridPane());
+				});
+			}
+		}, 0, 1000);
 	}
 }
