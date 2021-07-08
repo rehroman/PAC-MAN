@@ -72,7 +72,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		System.out.println("\n\n\n\n--------NEWGAME--------\n\n");// DEBUG;
 		if (level == 1)
 			points = 0;
-		lives = 1; // ToDo 3;
+		lives = 3;
 		currentPacManDirection = 1;
 		gameOver = false;
 		gameWin = false;

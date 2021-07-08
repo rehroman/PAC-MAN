@@ -10,20 +10,19 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
          <Button fx:id="gameExit" mnemonicParsing="false" onAction="#endGame" text="Beenden" />
-         <Label fx:id="levelLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="120.0" text="Level: ">
-            <font>
-               <Font size="20.0" />
-            </font>
-         </Label>
-         <Button fx:id="rankingButton" mnemonicParsing="false" onAction="#goToRanking" text="Highscores ansehen" />
+         <Button fx:id="rankingButton" mnemonicParsing="false" onAction="#goToRanking" text="Highscores ansehen">
+            <HBox.margin>
+               <Insets left="65.0" />
+            </HBox.margin>
+         </Button>
          <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartGame" text="Nochmal spielen">
             <HBox.margin>
-               <Insets left="10.0" />
+               <Insets left="20.0" />
             </HBox.margin>
          </Button>
          <ImageView fx:id="heart1" fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
             <HBox.margin>
-               <Insets left="20.0" />
+               <Insets left="65.0" />
             </HBox.margin>
             <Image url="@../Icons/heart.png" />
          </ImageView>
@@ -36,8 +35,8 @@
       </HBox>
    </bottom>
    <top>
-      <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
-         <Label fx:id="playerLabel" prefHeight="30.0" prefWidth="276.0" text="Spieler: ">
+      <HBox prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
+         <Label fx:id="playerLabel" prefHeight="30.0" prefWidth="200.0" text="Spieler: ">
             <font>
                <Font size="20.0" />
             </font>
@@ -45,12 +44,20 @@
                <Insets left="10.0" top="10.0" />
             </HBox.margin>
          </Label>
-         <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="191.0" text="Punkte:">
+         <Label fx:id="levelLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="150.0" text="Level: ">
             <font>
                <Font size="20.0" />
             </font>
             <HBox.margin>
-               <Insets left="150.0" right="5.0" top="10.0" />
+               <Insets left="80.0" top="10.0" />
+            </HBox.margin>
+         </Label>
+         <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="150.0" text="Punkte:">
+            <font>
+               <Font size="20.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="100.0" right="5.0" top="10.0" />
             </HBox.margin>
          </Label>
       </HBox>
