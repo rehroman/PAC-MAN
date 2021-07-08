@@ -347,11 +347,8 @@ public class GameModel implements GhostObserver, MovementObservable {
 				gameOver = true;
 			}
 		}
-		else if (gameOver) {
-			/*for (MovementObserver ghost : movementObservers) {
-				unregister(ghost);
-			}*/
 
+		if (gameOver) {
 			//update ranking
 			RankingData rankingData = RankingData.getInstance();
 			Ranking ranking = new Ranking(0, username, points);
