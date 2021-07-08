@@ -24,7 +24,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	int dotsCount;
 	String username;
 	int levelNo = 1;
-	
+
 	// Properties for GameState
 	Boolean gameOver;
 	Boolean gameWin;
@@ -158,7 +158,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 				}
 			}
 		}
-		System.out.println("Dots auf dem Feld " + dotsCount);// DEBUG;
 	}
 
 	private void renderLevel(String[][] worldElements) {
