@@ -28,7 +28,11 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * The standard launch class.
+	 * @param args arguments for launch.
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

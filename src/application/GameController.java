@@ -30,6 +30,11 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 	private GameModel GameModel;
 	private GridPane pane;
 
+	/**
+	 * Initiates the game controller.
+	 * @param root the game view's parent node.
+	 * @param username the current user's name.
+	 */
 	public void init(Parent root, String username) {
 		displayName(username);
 
@@ -40,8 +45,7 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 		pane = GameModel.getGridPane();
 		gamePane.setCenter(pane);
 
-		// startAutoRefreshWorld();
-		// alternative: subscribe to movement updates
+		// subscribe to movement updates
 		movementSubscription();
 	}
 	
@@ -53,6 +57,10 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 		GameModel.register(this);
 	}
 
+	/**
+	 * Handles key inputs to control pacman.
+	 * @param e the key pressed event
+	 */
 	@Override
 	public void handle(KeyEvent e) {
 		KeyCode code = e.getCode();
@@ -102,19 +110,5 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 			pane.getChildren().clear();
 			gamePane.setCenter(GameModel.getGridPane());
 		});
-	}
-
-	private void startAutoRefreshWorld(){
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask(){
-			@Override
-			public void run() {
-				//what you want to do
-				Platform.runLater(() -> {
-					pane.getChildren().clear();
-					gamePane.setCenter(GameModel.getGridPane());
-				});
-			}
-		}, 0, 1000);
 	}
 }

@@ -4,6 +4,9 @@ import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The ghost model.
+ */
 public class Ghost extends Thread implements GhostObservable {
 
 	private final ArrayList<GhostObserver> observers;
@@ -11,6 +14,12 @@ public class Ghost extends Thread implements GhostObservable {
 	private final GameModel gameModel;
 	private final int ghostID;
 
+	/**
+	 * Constructs a ghost.
+	 * @param gameModel the current game's model
+	 * @param ghostID the current ghost's ID
+	 * @param currentGhostLocation the current location of this ghost
+	 */
 	public Ghost(GameModel gameModel, int ghostID, Point2D currentGhostLocation) {
 
 		this.ghostLocation = new Point2D(currentGhostLocation.getX(), currentGhostLocation.getY());

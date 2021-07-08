@@ -326,15 +326,8 @@ public class GameModel implements GhostObserver, MovementObservable {
 			lives -= 1;
 			System.out.println("LIVE LOST TRIGGER from GameModelClass! Location " + " Lives: " + lives); //DEBUG
 		}
-		else if (positionInhabitant.equals("PACMAN")) {
-			// ToDo: remove?
-			System.out.println("obstacle pacman");//DEBUG;
-			// ??
-			/*positionState[currentX][currentY] = "EMPTY";
-			positionState[possibleX][possibleY] = "PACMAN";
-			currentPacmanLocation = possiblePacmanLocation;*/
-		}
 
+		// bugfix
 		if (lives < 0) lives = 0;
 	}
 
