@@ -157,7 +157,6 @@ public class GameModel implements GhostObserver, MovementObservable {
 				}
 			}
 		}
-		System.out.println("Dots auf dem Feld " + dotsCount);// DEBUG;
 	}
 
 	private void renderLevel(String[][] worldElements) {
@@ -328,7 +327,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		}
 		else if (positionInhabitant.equals("PACMAN")) {
 			// ToDo: remove?
-			System.out.println("obstacle pacman");//DEBUG;
+			//System.out.println("obstacle pacman");//DEBUG;
 			// ??
 			/*positionState[currentX][currentY] = "EMPTY";
 			positionState[possibleX][possibleY] = "PACMAN";

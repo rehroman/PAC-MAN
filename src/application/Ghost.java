@@ -10,6 +10,7 @@ public class Ghost extends Thread implements GhostObservable {
 	Point2D ghostLocation;
 	private final GameModel gameModel;
 	private final int ghostID;
+	int direction = 0;
 
 	public Ghost(GameModel gameModel, int ghostID, Point2D currentGhostLocation) {
 
@@ -26,7 +27,7 @@ public class Ghost extends Thread implements GhostObservable {
 			while (!gameModel.gameOver && !gameModel.gameWin) {
 
 				try {
-					sleep(600);
+					sleep(400);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 					System.out.println("Thread Ghost of" + ghostID + " was interrupted, failed to complete operation");
@@ -45,7 +46,6 @@ public class Ghost extends Thread implements GhostObservable {
 	private void moveGhost(Point2D currentGhostLocation) {
 		Random randomInt = new Random();
 		Point2D possibleLocation;
-		int direction = 0;
 
 		//turnDecision random number for moving straight or making turn in random direction
 		int turnDecision = randomInt.nextInt(7);
