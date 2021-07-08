@@ -23,6 +23,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	int lives;
 	int dotsCount;
 	String username;
+	int levelNo = 1;
 	
 	// Properties for GameState
 	Boolean gameOver;
@@ -58,7 +59,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 */
 	public GameModel(String username) {
 		this.username = username;
-		this.start(1);
+		this.start(levelNo);
 		initializeGhosts();
 	}
 
@@ -71,7 +72,7 @@ public class GameModel implements GhostObserver, MovementObservable {
 		System.out.println("\n\n\n\n--------NEWGAME--------\n\n");// DEBUG;
 		if (level == 1)
 			points = 0;
-		lives = 3;
+		lives = 1; // ToDo 3;
 		currentPacManDirection = 1;
 		gameOver = false;
 		gameWin = false;
@@ -333,21 +334,34 @@ public class GameModel implements GhostObserver, MovementObservable {
 
 	/**
 	 * Handles the end of a level: starts another level on win,
-	 * restarts game on game over
+	 * ends game on game over or last level reached
 	 */
 	public void endLevel() {
-		// update ranking
-		RankingData rankingData = RankingData.getInstance();
-		Ranking ranking = new Ranking(0, username, points);
-		try {
-			rankingData.updateRanking(ranking);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (gameWin) {
+			if (levelNo < 2) {
+				// start new level
+				levelNo++;
+				start(levelNo);
+			}
+			else {
+				// end game
+				gameOver = true;
+			}
 		}
+		else if (gameOver) {
+			/*for (MovementObserver ghost : movementObservers) {
+				unregister(ghost);
+			}*/
 
-		// start new game
-		if (gameWin) start(2);
-		if (gameOver) start(1);
+			//update ranking
+			RankingData rankingData = RankingData.getInstance();
+			Ranking ranking = new Ranking(0, username, points);
+			try {
+				rankingData.updateRanking(ranking);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -418,6 +432,14 @@ public class GameModel implements GhostObserver, MovementObservable {
 	 */
 	public int getLives() {
 		return lives;
+	}
+
+	/**
+	 * Gets the currently played level.
+	 * @return level number
+	 */
+	public int getLevelNo() {
+		return levelNo;
 	}
 
 	/**

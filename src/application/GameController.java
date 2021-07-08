@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,14 +13,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
 
 /**
  * Starts the game, takes user input and updates the game view.
  */
 public class GameController extends MenuController implements EventHandler<KeyEvent>, MovementObserver {
+	@FXML Label levelLabel;
 	@FXML Button gameExit;
+	@FXML Button rankingButton;
+	@FXML Button restartButton;
 	@FXML ImageView heart3;
 	@FXML ImageView heart2;
 	@FXML ImageView heart1;
@@ -29,14 +32,22 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 	
 	private GameModel GameModel;
 	private GridPane pane;
+	private Parent root;
+	private String username;
 
 	/**
-	 * Initiates the game controller.
+	 * Initiates the game.
 	 * @param root the game view's parent node.
 	 * @param username the current user's name.
 	 */
 	public void init(Parent root, String username) {
-		displayName(username);
+		this.root = root;
+		this.username = username;
+
+		rankingButton.setVisible(false);
+		restartButton.setVisible(false);
+
+		displayName();
 
 		GameModel = new GameModel(username);
 		root.requestFocus();
@@ -47,9 +58,10 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 
 		// subscribe to movement updates
 		movementSubscription();
+		setLevel(GameModel.getLevelNo());
 	}
 	
-	private void displayName(String username) {
+	private void displayName() {
 		playerLabel.setText("Spieler: " + username);
 	}
 
@@ -82,6 +94,10 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 		pointsLabel.setText("Punkte: " + points);
 	}
 
+	private void setLevel(int level) {
+		levelLabel.setText("Level " + level);
+	}
+
 	private void setLives(int lives) {
 		switch (lives) {
 			case 3:
@@ -107,8 +123,39 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 	@Override
 	public void updateMovement() {
 		Platform.runLater(() -> {
-			pane.getChildren().clear();
-			gamePane.setCenter(GameModel.getGridPane());
+			if (GameModel.gameOver) {
+				showGameEndDialog();
+			}
+			else if (GameModel.gameWin) {
+				setLevel(GameModel.getLevelNo());
+			}
+			else {
+				pane.getChildren().clear();
+				gamePane.setCenter(GameModel.getGridPane());
+			}
 		});
+	}
+
+	private void showGameEndDialog() {
+		rankingButton.setVisible(true);
+		restartButton.setVisible(true);
+		// stop observing
+		GameModel.unregister(this);
+	}
+
+	/**
+	 * Switches to the ranking view.
+	 * @param e the button click event.
+	 * @throws IOException error if files in switchTo were not found
+	 */
+	public void goToRanking(ActionEvent e) throws IOException {
+		switchToRanking(e);
+	}
+
+	/**
+	 * Restarts the game on button click.
+	 */
+	public void restartGame() {
+		init(root, username);
 	}
 }
