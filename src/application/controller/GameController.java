@@ -32,7 +32,7 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 	@FXML Label playerLabel;
 	@FXML Label pointsLabel;
 	
-	private application.model.GameModel GameModel;
+	private GameModel GameModel;
 	private GridPane pane;
 	private Parent root;
 	private String username;
