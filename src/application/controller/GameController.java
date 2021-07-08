@@ -1,5 +1,7 @@
-package application;
+package application.controller;
 
+import application.model.GameModel;
+import application.MovementObserver;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,7 +32,7 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 	@FXML Label playerLabel;
 	@FXML Label pointsLabel;
 	
-	private GameModel GameModel;
+	private application.model.GameModel GameModel;
 	private GridPane pane;
 	private Parent root;
 	private String username;
