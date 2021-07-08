@@ -1,7 +1,9 @@
-package application;
+package application.controller;
 
 import java.io.IOException;
 
+import application.controller.GameController;
+import application.controller.MenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +53,7 @@ public class NameController extends MenuController {
 	private void switchToGameFromScene (Scene eventScene) throws IOException {
 		String username = name_NameField.getText();
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("3_Game.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/3_Game.fxml"));
 		Parent root = loader.load();
 
 		GameController gameController = loader.getController();
@@ -61,7 +63,7 @@ public class NameController extends MenuController {
 
 		scene.setOnKeyPressed(gameController);
 
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 

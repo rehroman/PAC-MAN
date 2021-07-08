@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
+<BorderPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.GameController">
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
          <Button fx:id="gameExit" mnemonicParsing="false" onAction="#endGame" text="Beenden" />
@@ -24,13 +24,13 @@
             <HBox.margin>
                <Insets left="65.0" />
             </HBox.margin>
-            <Image url="@../Icons/heart.png" />
+            <Image url="@../../Icons/heart.png" />
          </ImageView>
          <ImageView fx:id="heart2" fitHeight="25.0" fitWidth="23.0" layoutX="507.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../Icons/heart.png" />
+            <Image url="@../../Icons/heart.png" />
          </ImageView>
          <ImageView fx:id="heart3" fitHeight="25.0" fitWidth="23.0" layoutX="518.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../Icons/heart.png" />
+            <Image url="@../../Icons/heart.png" />
          </ImageView>
       </HBox>
    </bottom>
