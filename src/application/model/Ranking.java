@@ -1,4 +1,4 @@
-package application;
+package application.model;
 
 /**
  * Defines a Ranking object.

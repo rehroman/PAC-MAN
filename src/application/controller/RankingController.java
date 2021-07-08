@@ -1,7 +1,7 @@
 package application.controller;
 
-import application.Ranking;
-import application.RankingData;
+import application.model.Ranking;
+import application.model.RankingData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

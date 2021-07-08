@@ -1,5 +1,8 @@
-package application;
+package application.model;
 
+import application.GhostObservable;
+import application.GhostObserver;
+import application.model.GameModel;
 import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,5 +1,6 @@
-package application;
+package application.model;
 
+import application.*;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
