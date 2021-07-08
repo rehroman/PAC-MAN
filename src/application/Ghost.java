@@ -89,17 +89,6 @@ public class Ghost extends Thread implements GhostObservable {
 		ghostLocation = possibleLocation;
 	}
 
-	private void checkPacmanLocation(Point2D possibleLocation) {
-		if (possibleLocation == gameModel.currentPacmanLocation) {
-			gameModel.currentPacmanLocation = gameModel.startPacmanLocation;
-			gameModel.positionState[(int) gameModel.currentPacmanLocation.getX()][(int) gameModel.currentPacmanLocation
-					.getY()] = "PACMAN";
-			gameModel.lives -= 1;
-			System.out.println(
-					"LIVE LOST TRIGGER from GhostClass! Location " + possibleLocation + " Lives: " + gameModel.lives); // DEBUG
-		}
-	}
-
 	private void checkGameState() {
 		if (gameModel.lives <= 0 && !gameModel.gameOver) {
 			// prevent calling from every ghost thread
