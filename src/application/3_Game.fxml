@@ -52,7 +52,7 @@
                <Insets left="80.0" top="10.0" />
             </HBox.margin>
          </Label>
-         <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="150.0" text="Punkte:">
+         <Label fx:id="pointsLabel" contentDisplay="CENTER" layoutX="15.0" layoutY="20.0" prefHeight="30.0" prefWidth="180.0" text="Punkte:">
             <font>
                <Font size="20.0" />
             </font>
