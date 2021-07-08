@@ -125,11 +125,8 @@ public class GameController extends MenuController implements EventHandler<KeyEv
 		Platform.runLater(() -> {
 			if (GameModel.gameOver) {
 				showGameEndDialog();
-			}
-			else if (GameModel.gameWin) {
+			} else {
 				setLevel(GameModel.getLevelNo());
-			}
-			else {
 				pane.getChildren().clear();
 				gamePane.setCenter(GameModel.getGridPane());
 			}

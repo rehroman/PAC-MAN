@@ -122,22 +122,22 @@ public class GameModel implements GhostObserver, MovementObservable {
 				break;
 			case 2:
 				level = new String[][]{
-					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
-					{"BORDER", "DOT",     "DOT",    "DOT",   "DOT",     "DOT",   "CHERRY", "BORDER",  "CHERRY",    "DOT",     "DOT",   "DOT",    "DOT",    "DOT",   "BORDER"}, // 1
-					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 2
-					{"BORDER", "CHERRY",  "DOT",    "DOT",   "DOT",    "DOT",    "DOT",     "DOT",    "DOT",    "DOT",     "DOT",   "DOT",    "DOT",   "CHERRY", "BORDER"}, // 3
-					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 4
-					{"BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "DOT",    "DOT",     "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER"}, // 5
-					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 6
-					{"BORDER", "DOT",    "BORDER",  "DOT",   "DOT",    "DOT",    "BORDER", "BORDER",  "BORDER", "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 7
-					{"BORDER", "DOT",    "BORDER",  "DOT",   "BORDER", "BORDER",  "CHERRY",  "DOT",   "CHERRY","BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 8
-					{"BORDER", "DOT",     "DOT",    "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 9
-					{"BORDER", "DOT",    "BORDER",  "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",     "DOT",   "DOT",   "BORDER",  "DOT",   "BORDER"}, // 10
-					{"BORDER", "DOT",    "DOT",     "DOT",   "BORDER", "DOT",    "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 11
-					{"BORDER", "DOT",    "BORDER", "BORDER","BORDER",  "DOT",    "BORDER",  "BORDER","BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 12
-					{"BORDER", "DOT",    "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",   "DOT",     "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER"}, // 13
-					{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
-					//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 0
+						{"BORDER",  "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",     "DOT",   "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 1
+						{"BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 2
+						{"BORDER",  "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",   "BORDER"}, // 3
+						{"BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 4
+						{"BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",    "DOT",     "DOT",   "DOT",    "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 5
+						{"BORDER",  "DOT",    "DOT",    "DOT",   "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 6
+						{"BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",    "DOT",   "BORDER", "BORDER", "BORDER"}, // 7
+						{"BORDER",  "DOT",   "CHERRY",  "DOT",   "BORDER", "BORDER",  "DOT",     "DOT",   "DOT",   "BORDER", "BORDER",  "DOT",   "CHERRY",  "DOT",   "BORDER"}, // 8
+						{"BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER",  "DOT",   "BORDER"}, // 9
+						{"BORDER",  "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",   "CHERRY",  "DOT",    "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER"}, // 10
+						{"BORDER",  "DOT",   "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",    "DOT",    "DOT",   "BORDER",  "DOT",   "BORDER"}, // 11
+						{"BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER", "BORDER", "BORDER",  "DOT",   "BORDER"}, // 12
+						{"BORDER",  "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",    "DOT",      "DOT",   "BORDER"}, // 13
+						{"BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER", "BORDER"}, // 14
+						//  0		  1			2		  3			4		  5			6		  7         8		  9			10		  11		12		  13        14
 				};
 				break;
 		}
