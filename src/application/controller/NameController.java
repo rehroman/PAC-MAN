@@ -1,4 +1,4 @@
-package application;
+package application.controller;
 
 import java.io.IOException;
 
@@ -51,7 +51,7 @@ public class NameController extends MenuController {
 	private void switchToGameFromScene (Scene eventScene) throws IOException {
 		String username = name_NameField.getText();
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("3_Game.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("view/3_Game.fxml"));
 		Parent root = loader.load();
 
 		GameController gameController = loader.getController();
